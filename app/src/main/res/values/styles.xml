@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="smallRatingBar" parent="android:Widget.Material.RatingBar.Small">
+    </style>
+    <style name="normalRatingBar" parent="android:Widget.Material.RatingBar.Indicator">
+    </style>
+</resources>

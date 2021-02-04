@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "518903353822",
+    "firebase_url": "https://trippi-4bd70-default-rtdb.firebaseio.com",
+    "project_id": "trippi-4bd70",
+    "storage_bucket": "trippi-4bd70.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:518903353822:android:db789778846d45c0ad4d4f",
+        "android_client_info": {
+          "package_name": "com.example.trippi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "518903353822-dv36162pdof489gn2qhnvr4aid90qmlc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxgsxTWoRt4__yAdHOVUMAaH9GyzjuSRg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "518903353822-dv36162pdof489gn2qhnvr4aid90qmlc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

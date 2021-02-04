@@ -12,6 +12,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -69,10 +75,32 @@ public class HotelFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_hotel, container, false);
         ListView listView = view.findViewById(R.id.hotelListView);
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Hotels");
+        databaseReference.orderByChild("rating").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                hotelArrayList.clear();
+                for (DataSnapshot snapshot: dataSnapshot.getChildren()){
+                    Hotel hotel = snapshot.getValue(Hotel.class);
+                    hotel.id = Integer.parseInt(snapshot.getKey());
+                    hotelArrayList.add(hotel);
+                }
+                Collections.reverse(hotelArrayList);
+                HotelListAdapter customAdapter = new HotelListAdapter(getActivity(), R.layout.hotel_list_item, hotelArrayList);
+                listView.setAdapter(customAdapter);
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Intent intent = new Intent(HotelFragment.this.getActivity(), HotelDetail.class);
+//                intent.putExtra("Hotel", hotelArrayList.get(position));
+//                startActivity(intent);
             }
         });
         return view;

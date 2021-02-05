@@ -13,6 +13,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="fontFamily">@font/lao_sangam</item>
+        <item name="colorAccent">@color/dark_cyan</item>
     </style>
     <style name="ButtonBackground" parent="Widget.AppCompat.Button">
         <item name="android:background">@color/white</item>

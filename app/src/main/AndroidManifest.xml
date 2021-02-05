@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Trippi">
-        <activity android:name=".HotelDetail"></activity>
+        <activity android:name=".HotelBooking"></activity>
+        <activity android:name=".HotelDetail" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

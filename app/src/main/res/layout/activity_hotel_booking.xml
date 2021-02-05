@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".HotelBooking">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/bookHotelImageView"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginLeft="@dimen/pad_left"
+                android:layout_marginTop="@dimen/margin_top"
+                app:srcCompat="@drawable/ic_hotel" />
+
+            <ImageView
+                android:id="@+id/bookHotelRoomImageView"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_below="@id/bookHotelImageView"
+                android:layout_marginLeft="@dimen/pad_left"
+                android:layout_marginTop="@dimen/margin_top"
+                app:srcCompat="@drawable/ic_room" />
+
+            <ImageView
+                android:id="@+id/bookHotelPriceImageView"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_below="@id/bookHotelRoomImageView"
+                android:layout_marginLeft="@dimen/pad_left"
+                android:layout_marginTop="@dimen/margin_top"
+                app:srcCompat="@drawable/ic_currency" />
+
+            <TextView
+                android:id="@+id/bookHotelNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_marginLeft="@dimen/pad_left"
+                android:layout_marginTop="@dimen/margin_top"
+                android:layout_toRightOf="@id/bookHotelImageView"
+                android:text="Hotel Name"
+                android:textSize="@dimen/hotel_text" />
+
+            <TextView
+                android:id="@+id/bookHotelRoomTypeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_below="@id/bookHotelNameTextView"
+                android:layout_marginLeft="@dimen/pad_left"
+                android:layout_marginTop="@dimen/margin_top"
+                android:layout_toRightOf="@id/bookHotelRoomImageView"
+                android:text="Room Type"
+                android:textSize="@dimen/hotel_text" />
+
+            <TextView
+                android:id="@+id/bookHotelPriceTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_below="@id/bookHotelRoomTypeTextView"
+                android:layout_marginLeft="@dimen/pad_left"
+                android:layout_marginTop="@dimen/margin_top"
+                android:layout_marginBottom="@dimen/pad_bottom"
+                android:layout_toRightOf="@id/bookHotelPriceImageView"
+                android:text="Price"
+                android:textSize="@dimen/hotel_text" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/bookHotelSelectDateButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/pad_left"
+            android:layout_marginTop="@dimen/margin_top"
+            android:layout_marginRight="@dimen/pad_right"
+            android:background="@drawable/custom_rounded_button"
+            android:text="Select Date"
+            android:textColor="@color/white" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/margin_top"
+            android:layout_marginBottom="@dimen/margin_bottom"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/bookHotelTotalDaysLabelTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/pad_left"
+                android:layout_marginTop="@dimen/margin_top"
+                android:layout_weight="1"
+                android:text="Total Days"
+                android:textSize="@dimen/hotel_text" />
+
+            <TextView
+                android:id="@+id/bookHotelTotalDaysTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_top"
+                android:layout_marginRight="@dimen/pad_right"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="0 Day"
+                android:textDirection="ltr"
+                android:textSize="@dimen/hotel_text" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/speratorView2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/pad_left"
+            android:layout_marginTop="@dimen/pad_top"
+            android:layout_marginRight="@dimen/pad_right"
+            android:background="#333333" />
+
+        <TextView
+            android:id="@+id/bookHotelBedTypeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/pad_left"
+            android:layout_marginTop="@dimen/margin_top"
+            android:text="Choose Bed Type"
+            android:textAllCaps="true"
+            android:textSize="@dimen/hotel_title" />
+
+        <RadioGroup
+            android:id="@+id/bedTypeRadioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/pad_left"
+            android:layout_marginTop="@dimen/margin_top"
+            android:layout_marginRight="@dimen/pad_right"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/doubleBedRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Double" />
+
+            <RadioButton
+                android:id="@+id/twinBedRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Twin" />
+
+        </RadioGroup>
+
+        <Switch
+            android:id="@+id/extraBedSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/pad_left"
+            android:layout_marginTop="@dimen/pad_top"
+            android:layout_marginRight="@dimen/pad_right"
+            android:layout_weight="1"
+            android:text="Extra Bed" />
+
+        <View
+            android:id="@+id/speratorView"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="@dimen/pad_left"
+            android:layout_marginTop="@dimen/pad_top"
+            android:layout_marginRight="@dimen/pad_right"
+            android:background="#333333" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/pad_left"
+            android:layout_marginTop="@dimen/pad_top"
+            android:layout_marginRight="@dimen/pad_right"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/bookHotelTotalPriceTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/pad_right"
+                android:layout_weight="1"
+                android:text="Total Price (Inc. GST)"
+                android:textSize="@dimen/hotel_text" />
+
+            <TextView
+                android:id="@+id/bookHotelTotalPriceNumTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="$ 0.0"
+                android:textSize="@dimen/hotel_text" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/bookHotelMakePaymentButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pad_top"
+            android:background="@color/dark_cyan"
+            android:text="Make Payment"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+</ScrollView>

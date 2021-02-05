@@ -130,4 +130,11 @@ public class HotelDetail extends AppCompatActivity implements RoomRecycleViewAda
         currentLng = location.getLongitude();
         currentLatLng = new LatLng(currentLat, currentLng);
     }
+
+    public void onBookButtonClick(View view) {
+        Intent intent = new Intent(this, HotelBooking.class);
+        intent.putExtra("BookHotel", hotel);
+        intent.putExtra("BookRoom", room);
+        startActivity(intent);
+    }
 }

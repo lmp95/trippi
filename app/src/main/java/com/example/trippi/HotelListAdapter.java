@@ -40,7 +40,7 @@ public class HotelListAdapter extends ArrayAdapter<Hotel> {
         Hotel hotel = hotelList.get(position);
         hotelName.setText(hotel.name);
         hotelRating.setText(String.valueOf(hotel.rating));
-//        new LoadHotelImageFromUrl(imageView).execute(hotel.image_url);
+        new DownloadHotelImageFromUrl(imageView).execute(hotel.image_url);
 
         return view;
     }

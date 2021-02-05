@@ -69,16 +69,11 @@ public class MainActivity extends AppCompatActivity {
     public void requestLocationPermission() {
         if (ContextCompat.checkSelfPermission(MainActivity.this,
                 android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,
-                    android.Manifest.permission.ACCESS_FINE_LOCATION)){
-                ActivityCompat.requestPermissions(MainActivity.this,
-                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-            }else{
-                ActivityCompat.requestPermissions(MainActivity.this,
-                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-            }
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults){

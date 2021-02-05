@@ -25,9 +25,6 @@ public class HotelBooking extends AppCompatActivity {
     TextView hotelPriceTextView;
     TextView hotelBookTotalDay;
     Button dateSelectButton;
-    Date fromDate;
-    Date toDate;
-    String totalDays;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,25 +40,6 @@ public class HotelBooking extends AppCompatActivity {
         hotelNameTextView.setText(hotel.name);
         hotelTypeTextView.setText(room.name);
         hotelPriceTextView.setText(String.valueOf(room.price));
-        MaterialDatePicker.Builder<Pair<Long, Long>> datePickerBuilder = MaterialDatePicker.Builder.dateRangePicker();
-        MaterialDatePicker datePicker = datePickerBuilder.build();
-        dateSelectButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                datePicker.show(getSupportFragmentManager(), "DATE_PICKER");
-            }
-        });
-
-        datePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Pair<Long, Long>>() {
-            @Override
-            public void onPositiveButtonClick(Pair<Long, Long>  selection) {
-                fromDate = new Date(selection.first);
-                toDate = new Date(selection.second);
-                long different = toDate.getTime() - fromDate.getTime();
-                totalDays = String.valueOf(TimeUnit.DAYS.convert(different, TimeUnit.MILLISECONDS));
-                hotelBookTotalDay.setText(totalDays + " Days");
-            }
-        });
 
     }
 }

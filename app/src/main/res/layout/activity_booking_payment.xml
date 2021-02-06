@@ -1,9 +1,244 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".BookingPayment">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/confrimButton"
+        android:layout_marginLeft="@dimen/pad_left"
+        android:layout_marginTop="@dimen/margin_top"
+        android:layout_marginRight="@dimen/pad_right">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/bookingHotelNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="false"
+                android:text="Hotel"
+                android:textSize="@dimen/hotel_title" />
+
+            <TextView
+                android:id="@+id/bookingRoomTypeTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/bookingHotelNameTextView"
+                android:layout_marginTop="@dimen/margin_top"
+                android:text="Room Type" />
+
+            <CheckBox
+                android:id="@+id/bookingExtraBedCheckBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fromToDateLinearLayout"
+                android:clickable="false"
+                android:text="Extra Bed" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_below="@id/totalPriceLinearLayout"
+                android:layout_marginTop="@dimen/pad_top"
+                android:background="@color/silver" />
+
+            <LinearLayout
+                android:id="@+id/fromToDateLabelLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/bookingRoomTypeTextView"
+                android:layout_marginTop="@dimen/margin_top"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/bookingFromDateLabelTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="From" />
+
+                <TextView
+                    android:id="@+id/bookingToDateLabelTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="To" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/fromToDateLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/fromToDateLabelLinearLayout"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/bookingFromDateTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="DD/MM/YYYY" />
+
+                <TextView
+                    android:id="@+id/bookingToDateTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14dp"
+                    android:layout_weight="1"
+                    android:text="DD/MM/YYYY" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/totalPriceLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/bookingExtraBedCheckBox"
+                android:layout_marginTop="@dimen/margin_top"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/bookingTotalPriceLabelTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Total Price" />
+
+                <TextView
+                    android:id="@+id/bookingTotalPriceTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="$ 0.0" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/paymentFormTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/divider"
+                android:layout_marginTop="@dimen/margin_top"
+                android:text="Payment Information"
+                android:textSize="@dimen/hotel_title" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/fullNameTextField"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/paymentFormTextView"
+                android:hint="CARD HOLDER NAME">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextFullName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/cardNumberTextField"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fullNameTextField"
+                android:hint="CARD NUMBER">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextCardNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="16"
+                    android:singleLine="true" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/expireMonthTextField"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cardNumberTextField"
+                android:hint="MONTH">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextExpireMonth"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/expireYearTextField"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cardNumberTextField"
+                android:layout_toRightOf="@id/expireMonthTextField"
+                android:hint="YEAR">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextExpireYear"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/cvvTextField"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/cardNumberTextField"
+                android:layout_alignParentEnd="true"
+                android:hint="CVV">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextCVV"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/emailTextField"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/expireMonthTextField"
+                android:hint="EMAIL">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:singleLine="true" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/confrimButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/dark_cyan"
+        android:text="Confirm" />
+
+</RelativeLayout>

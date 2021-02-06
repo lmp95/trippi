@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Trippi">
-        <activity android:name=".BookingPayment"></activity>
+        <activity android:name=".BookingPayment" android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".HotelBooking" />
         <activity android:name=".HotelDetail" />
 

@@ -82,7 +82,7 @@ public class HotelFragment extends Fragment {
                 hotelArrayList.clear();
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()){
                     Hotel hotel = snapshot.getValue(Hotel.class);
-                    hotel.id = Integer.parseInt(snapshot.getKey());
+                    hotel.id = snapshot.getKey();
                     hotelArrayList.add(hotel);
                 }
                 Collections.reverse(hotelArrayList);

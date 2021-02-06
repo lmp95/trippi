@@ -5,6 +5,7 @@
     <item
         android:id="@+id/actionbarSearch"
         android:icon="@drawable/ic_search_24dp"
+        android:iconTint="#FFFFFF"
         android:title="Search"
         app:showAsAction="always" />
 </menu>

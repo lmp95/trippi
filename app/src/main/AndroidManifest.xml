@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Trippi">
-        <activity android:name=".HotelBooking"></activity>
+        <activity android:name=".BookingPayment"></activity>
+        <activity android:name=".HotelBooking" />
         <activity android:name=".HotelDetail" />
 
         <meta-data

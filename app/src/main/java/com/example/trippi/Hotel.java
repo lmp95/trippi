@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Hotel implements Serializable {
 
-        public int id;
+        public String id;
         public String image_url;
         public String name;
         public String location;
@@ -15,7 +15,7 @@ public class Hotel implements Serializable {
         public Hotel() {
         }
 
-        public Hotel(int id, String image_url, String name, String location, float lat, float lng, float rating) {
+        public Hotel(String id, String image_url, String name, String location, float lat, float lng, float rating) {
             this.id = id;
             this.image_url = image_url;
             this.name = name;

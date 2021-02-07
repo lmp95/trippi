@@ -186,6 +186,7 @@
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/cardNumberTextField"
+                android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@id/expireMonthTextField"
                 android:hint="YEAR">
 
@@ -239,6 +240,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/dark_cyan"
+        android:onClick="saveToDatabase"
         android:text="Confirm" />
 
 </RelativeLayout>

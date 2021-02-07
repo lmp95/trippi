@@ -7,6 +7,7 @@ import androidx.core.util.Pair;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +27,7 @@ public class HotelBooking extends AppCompatActivity {
 
     Hotel hotel;
     Room room;
+    Booking booking;
     TextView hotelNameTextView;
     TextView hotelTypeTextView;
     TextView hotelPriceTextView;
@@ -39,6 +41,7 @@ public class HotelBooking extends AppCompatActivity {
     String totalDays;
     RadioGroup bedTypeRadioGroup;
     Switch extraBedSwitch;
+    boolean extraBed;
     LinearLayout extraBedLinearLayout;
     float totalPrice;
     float extraBedPrice = (float) 35.0;
@@ -82,10 +85,12 @@ public class HotelBooking extends AppCompatActivity {
             if(isChecked){
                 totalPrice += extraBedPrice;
                 extraBedLinearLayout.setVisibility(View.VISIBLE);
+                extraBed = true;
             }
             else {
                 totalPrice -= extraBedPrice;
                 extraBedLinearLayout.setVisibility(View.INVISIBLE);
+                extraBed = false;
             }
             extraBedPriceTextView.setText("$ " + extraBedPrice);
             totalPriceTextView.setText("$ " + totalPrice);
@@ -97,7 +102,17 @@ public class HotelBooking extends AppCompatActivity {
     }
 
     public void onPaymentButtonClick(View view) {
+        booking = new Booking();
+        booking.hotelID = hotel.id;
+        booking.hotelName = hotel.name;
+        booking.roomID = room.id;
+        booking.roomType = room.name;
+        booking.extraBed = extraBed;
+        booking.totalPrice = totalPrice;
+        booking.fromDate = fromDate;
+        booking.toDate = toDate;
         Intent intent = new Intent(this, BookingPayment.class);
+        intent.putExtra("Booking", booking);
         startActivity(intent);
     }
 

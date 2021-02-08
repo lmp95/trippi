@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -45,6 +46,7 @@ public class HotelBooking extends AppCompatActivity {
     LinearLayout extraBedLinearLayout;
     float totalPrice;
     float extraBedPrice = (float) 35.0;
+    SimpleDateFormat simpleDate =  new SimpleDateFormat("dd/MM/yyyy");
 
 
     @SuppressLint("SetTextI18n")
@@ -109,8 +111,8 @@ public class HotelBooking extends AppCompatActivity {
         booking.roomType = room.name;
         booking.extraBed = extraBed;
         booking.totalPrice = totalPrice;
-        booking.fromDate = fromDate;
-        booking.toDate = toDate;
+        booking.fromDate = simpleDate.format(fromDate);
+        booking.toDate = simpleDate.format(toDate);
         Intent intent = new Intent(this, BookingPayment.class);
         intent.putExtra("Booking", booking);
         startActivity(intent);

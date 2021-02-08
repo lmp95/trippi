@@ -11,16 +11,25 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.text.SimpleDateFormat;
+import java.util.UUID;
 
 public class BookingPayment extends AppCompatActivity {
 
     Booking booking;
+    String bookingID;
     TextView hotelNameTextView, roomTypeTextView, fromDateTextView, toDateTextView, totalPriceTextView;
     CheckBox extraBedCheckBox;
     AlertDialog.Builder builder;
+    EditText editTextFullName, editTextCardNumber, editTextExpireMonth, editTextExpireYear, editTextCVV, editTextEmail;
+    boolean isCreated;
+    DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference().child("Booking");
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -29,7 +38,6 @@ public class BookingPayment extends AppCompatActivity {
         setContentView(R.layout.activity_booking_payment);
         builder = new AlertDialog.Builder(this);
         addBackAction();
-        SimpleDateFormat simpleDate =  new SimpleDateFormat("dd/MM/yyyy");
         booking = (Booking) getIntent().getSerializableExtra("Booking");
         hotelNameTextView = findViewById(R.id.bookingHotelNameTextView);
         roomTypeTextView = findViewById(R.id.bookingRoomTypeTextView);
@@ -37,10 +45,16 @@ public class BookingPayment extends AppCompatActivity {
         toDateTextView = findViewById(R.id.bookingToDateTextView);
         extraBedCheckBox = findViewById(R.id.bookingExtraBedCheckBox);
         totalPriceTextView = findViewById(R.id.bookingTotalPriceTextView);
+        editTextFullName = findViewById(R.id.editTextFullName);
+        editTextCardNumber = findViewById(R.id.editTextCardNumber);
+        editTextExpireMonth = findViewById(R.id.editTextExpireMonth);
+        editTextExpireYear = findViewById(R.id.editTextExpireYear);
+        editTextCVV = findViewById(R.id.editTextCVV);
+        editTextEmail = findViewById(R.id.editTextEmail);
         hotelNameTextView.setText(booking.hotelName);
         roomTypeTextView.setText(booking.roomType);
-        fromDateTextView.setText(simpleDate.format(booking.fromDate));
-        toDateTextView.setText(simpleDate.format(booking.toDate));
+        fromDateTextView.setText(booking.fromDate);
+        toDateTextView.setText(booking.toDate);
         extraBedCheckBox.setChecked(booking.extraBed);
         totalPriceTextView.setText("$ " + booking.totalPrice);
     }
@@ -65,7 +79,10 @@ public class BookingPayment extends AppCompatActivity {
             .setCancelable(false)
             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    finish();
+                    isCreated = createBooking();
+                    if(isCreated){
+                        dbReference.child(bookingID).setValue(booking);
+                    }
                 }
             })
             .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -77,6 +94,15 @@ public class BookingPayment extends AppCompatActivity {
         AlertDialog alert = builder.create();
         alert.setTitle("Confirm");
         alert.show();
+    }
+
+    private boolean createBooking() {
+        bookingID = UUID.randomUUID().toString();
+        booking.bookID = bookingID;
+        booking.billingCardName = editTextFullName.getText().toString();
+        booking.billingEmail = editTextEmail.getText().toString();
+        booking.userID = "123FGEFDW";
+        return true;
     }
 
 }

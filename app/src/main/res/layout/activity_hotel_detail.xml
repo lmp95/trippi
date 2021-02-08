@@ -70,24 +70,50 @@
             android:text="TextView"
             android:textSize="@dimen/hotel_text" />
 
-        <Button
-            android:id="@+id/getDirectionButton"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/hotelDetailLocationTextView"
-            android:layout_marginStart="@dimen/margin_left"
-            android:layout_marginTop="@dimen/margin_top"
-            android:background="@drawable/custom_rounded_button"
-            android:onClick="showDirectionOnMap"
-            android:text="Get Direction"
-            android:textColor="@color/white"
-            android:textSize="12sp" />
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/hotelDetailLocationTextView">
+
+            <Button
+                android:id="@+id/getDirectionButton"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="@dimen/pad_left"
+                android:layout_marginTop="@dimen/margin_top"
+                android:background="@drawable/custom_rounded_button"
+                android:onClick="showDirectionOnMap"
+                android:text="Get Direction"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/hotelDetailSendMessageButton"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="175dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="@dimen/pad_right"
+                android:onClick="sendMessageToHotel"
+                android:text="Send Message"
+                android:textColor="@color/dark_cyan"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:cornerRadius="5dp"
+                app:icon="@drawable/ic_message"
+                app:iconSize="24dp"
+                app:iconTint="@color/dark_cyan"
+                app:strokeColor="@color/dark_cyan"
+                app:strokeWidth="1dp" />
+        </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/roomRecycleView"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:layout_below="@id/getDirectionButton"
+            android:layout_below="@id/relativeLayout"
             android:layout_marginTop="@dimen/margin_top" />
 
         <RelativeLayout

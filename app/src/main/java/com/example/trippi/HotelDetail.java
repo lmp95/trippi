@@ -1,6 +1,7 @@
 package com.example.trippi;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,6 +17,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -56,6 +59,7 @@ public class HotelDetail extends AppCompatActivity implements RoomRecycleViewAda
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hotel_detail);
+        addBackAction();
         hotel = (Hotel) getIntent().getSerializableExtra("Hotel");
         roomList = new ArrayList<>();
         roomCardView = findViewById(R.id.roomCardView);
@@ -73,6 +77,7 @@ public class HotelDetail extends AppCompatActivity implements RoomRecycleViewAda
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference()
                 .child("Rooms").child(String.valueOf(hotel.id));
         databaseReference.addValueEventListener(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()){
@@ -82,7 +87,7 @@ public class HotelDetail extends AppCompatActivity implements RoomRecycleViewAda
                 }
                 RoomRecycleViewAdapter adapter = new RoomRecycleViewAdapter(getApplicationContext(), roomList, listener);
                 roomRecyclerView.setAdapter(adapter);
-                chooseRoomPriceTextView.setText(String.valueOf(roomList.get(0).price));
+                chooseRoomPriceTextView.setText("$ " + roomList.get(0).price + " per night");
                 room = roomList.get(0);
             }
 
@@ -107,10 +112,11 @@ public class HotelDetail extends AppCompatActivity implements RoomRecycleViewAda
         new DownloadHotelImageFromUrl(hotelImageView).execute(hotel.image_url);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onRoomClick(int position) {
         room = roomList.get(position);
-        chooseRoomPriceTextView.setText(String.valueOf(roomList.get(position).price));
+        chooseRoomPriceTextView.setText("$ " + roomList.get(position).price + " per night");
     }
 
     @Override
@@ -137,4 +143,30 @@ public class HotelDetail extends AppCompatActivity implements RoomRecycleViewAda
         intent.putExtra("BookRoom", room);
         startActivity(intent);
     }
+
+    private void addBackAction() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void showDirectionOnMap(View view){
+
+    }
+
+    public void sendMessageToHotel(View view){
+        Intent intent = new Intent(this, SendMessageHotel.class);
+        intent.putExtra("MessageHotel", hotel);
+        startActivity(intent);
+    }
+
 }

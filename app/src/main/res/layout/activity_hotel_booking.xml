@@ -133,7 +133,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/pad_left"
             android:layout_marginTop="@dimen/margin_top"
-            android:text="Choose Bed Type"
+            android:text="Choose Bed Room"
             android:textAllCaps="true"
             android:textSize="@dimen/hotel_title" />
 
@@ -151,14 +151,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Double" />
+                android:text="Double Bed" />
 
             <RadioButton
                 android:id="@+id/twinBedRadioButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Twin" />
+                android:text="Twin Bed" />
 
         </RadioGroup>
 

@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/actionbarSearch"
-        android:icon="@drawable/ic_search_24dp"
+        android:icon="@drawable/ic_search"
         android:iconTint="#FFFFFF"
         android:title="Search"
         app:showAsAction="always" />

@@ -1,14 +1,18 @@
 package com.example.trippi;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.util.Pair;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -40,8 +44,10 @@ public class HotelBooking extends AppCompatActivity {
     Date fromDate;
     Date toDate;
     String totalDays;
+    String roomBedType;
     RadioGroup bedTypeRadioGroup;
     Switch extraBedSwitch;
+    AlertDialog.Builder builder;
     boolean extraBed;
     LinearLayout extraBedLinearLayout;
     float totalPrice;
@@ -54,8 +60,10 @@ public class HotelBooking extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hotel_booking);
+        addBackAction();
         hotel = (Hotel) getIntent().getSerializableExtra("BookHotel");
         room = (Room) getIntent().getSerializableExtra("BookRoom");
+        builder = new AlertDialog.Builder(this);
         hotelNameTextView = findViewById(R.id.bookHotelNameTextView);
         hotelTypeTextView = findViewById(R.id.bookHotelRoomTypeTextView);
         hotelPriceTextView = findViewById(R.id.bookHotelPriceTextView);
@@ -104,18 +112,54 @@ public class HotelBooking extends AppCompatActivity {
     }
 
     public void onPaymentButtonClick(View view) {
-        booking = new Booking();
-        booking.hotelID = hotel.id;
-        booking.hotelName = hotel.name;
-        booking.roomID = room.id;
-        booking.roomType = room.name;
-        booking.extraBed = extraBed;
-        booking.totalPrice = totalPrice;
-        booking.fromDate = simpleDate.format(fromDate);
-        booking.toDate = simpleDate.format(toDate);
-        Intent intent = new Intent(this, BookingPayment.class);
-        intent.putExtra("Booking", booking);
-        startActivity(intent);
+        if(fromDate == null && toDate == null){
+            showAlertDialog("Please Choose Date for booking", "Dates Required");
+        }
+        else if(bedTypeRadioGroup.getCheckedRadioButtonId() == -1){
+            showAlertDialog("Please Choose Bed Room", "Bed Room Required");
+        }
+        else{
+            booking = new Booking();
+            booking.hotelID = hotel.id;
+            booking.hotelName = hotel.name;
+            booking.roomID = room.id;
+            booking.roomType = room.name;
+            booking.extraBed = extraBed;
+            booking.totalPrice = totalPrice;
+            booking.fromDate = simpleDate.format(fromDate);
+            booking.toDate = simpleDate.format(toDate);
+            Intent intent = new Intent(this, BookingPayment.class);
+            intent.putExtra("Booking", booking);
+            startActivity(intent);
+        }
+    }
+
+    private void addBackAction() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void showAlertDialog(String message, String title) {
+        builder.setMessage(message)
+                .setCancelable(false)
+                .setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.setTitle(title);
+        alert.show();
     }
 
 }

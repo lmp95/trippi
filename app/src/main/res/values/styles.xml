@@ -4,4 +4,6 @@
     </style>
     <style name="normalRatingBar" parent="android:Widget.Material.RatingBar.Indicator">
     </style>
+    <style name="largeRatingBar" parent="android:Widget.Material.RatingBar">
+    </style>
 </resources>

@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,7 +25,6 @@ public class HotelListAdapter extends ArrayAdapter<Hotel> {
         this.context = context;
         this.resource = resource;
         this.hotelList = hotelList;
-
     }
 
     @NonNull
@@ -36,10 +36,12 @@ public class HotelListAdapter extends ArrayAdapter<Hotel> {
         ImageView imageView = view.findViewById(R.id.hotelImageView);
         TextView hotelName = view.findViewById(R.id.hotelNametextView);
         TextView hotelRating = view.findViewById(R.id.hotelRatingTextView);
+        RatingBar hotelRatingBar = view.findViewById(R.id.hotelRatingBar);
 
         Hotel hotel = hotelList.get(position);
         hotelName.setText(hotel.name);
         hotelRating.setText(String.valueOf(hotel.rating));
+        hotelRatingBar.setRating(hotel.rating);
         new DownloadHotelImageFromUrl(imageView).execute(hotel.image_url);
 
         return view;

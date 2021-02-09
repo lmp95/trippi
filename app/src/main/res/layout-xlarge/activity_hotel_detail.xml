@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".HotelDetail">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/hotelDetailImageView"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:scaleType="centerCrop" />
+
+        <RelativeLayout
+            android:id="@+id/nestedHotelDetailRelativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/hotelDetailImageView"
+            android:layout_marginTop="@dimen/margin_top"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/hotelDetailNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/pad_left"
+                android:layout_marginTop="@dimen/margin_top"
+                android:text="TextView"
+                android:textSize="@dimen/hotel_title" />
+
+            <RatingBar
+                android:id="@+id/hotelDetailRatingBar"
+                style="@style/smallRatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="false"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/pad_left"
+                android:layout_marginTop="@dimen/margin_top"
+                android:layout_marginRight="@dimen/margin_right"
+                android:layout_toLeftOf="@id/hotelDetailRatingTextView"
+                android:clickable="false"
+                android:isIndicator="true" />
+
+            <TextView
+                android:id="@+id/hotelDetailRatingTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/margin_right"
+                android:paddingRight="@dimen/pad_right"
+                android:text="TextView" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/hotelDetailLocationTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/nestedHotelDetailRelativeLayout"
+            android:layout_marginLeft="@dimen/pad_left"
+            android:layout_marginTop="@dimen/margin_top"
+            android:text="TextView"
+            android:textSize="@dimen/hotel_text" />
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/hotelDetailLocationTextView">
+
+            <Button
+                android:id="@+id/getDirectionButton"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="@dimen/pad_left"
+                android:layout_marginTop="@dimen/margin_top"
+                android:background="@drawable/custom_rounded_button"
+                android:onClick="showDirectionOnMap"
+                android:text="Get Direction"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/hotelDetailSendMessageButton"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="175dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="@dimen/pad_right"
+                android:onClick="sendMessageToHotel"
+                android:text="Send Message"
+                android:textColor="@color/dark_cyan"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:cornerRadius="5dp"
+                app:icon="@drawable/ic_message"
+                app:iconSize="24dp"
+                app:iconTint="@color/dark_cyan"
+                app:strokeColor="@color/dark_cyan"
+                app:strokeWidth="1dp" />
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/roomRecycleView"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_below="@id/relativeLayout"
+            android:layout_marginTop="@dimen/margin_top" />
+
+        <RelativeLayout
+            android:id="@+id/hotelDetailBottomLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/hotelMapView"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentBottom="true"
+            android:background="@color/dark_cyan">
+
+            <TextView
+                android:id="@+id/chooseRoomPriceTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="false"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/margin_left"
+                android:paddingLeft="@dimen/pad_left"
+                android:text="0.0"
+                android:textColor="@color/white"
+                android:textSize="@dimen/hotel_text" />
+
+            <android.widget.Button
+                android:id="@+id/bookButton"
+                style="@style/ButtonBackground"
+                android:layout_width="150dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:background="@color/white"
+                android:drawableRight="@drawable/ic_baseline_keyboard_arrow_right_24"
+                android:drawablePadding="10dp"
+                android:onClick="onBookButtonClick"
+                android:paddingLeft="@dimen/pad_left"
+                android:paddingRight="@dimen/pad_right"
+                android:text="Book"
+                android:textColor="#333" />
+        </RelativeLayout>
+
+        <fragment
+            android:id="@+id/hotelMapView"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_below="@id/roomRecycleView"
+            app:cameraTargetLat="-33.796923"
+            app:cameraTargetLng="150.922433"
+            app:cameraZoom="13"
+            app:mapType="normal"
+            app:uiTiltGestures="true"
+            app:uiZoomControls="true"
+            app:uiZoomGestures="true" />
+
+    </RelativeLayout>
+
+</ScrollView>

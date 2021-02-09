@@ -12,4 +12,5 @@
     <dimen name="margin_bottom">12dp</dimen>
     <dimen name="hotel_title">24sp</dimen>
     <dimen name="hotel_text">16sp</dimen>
+    <dimen name="hotel_title_xl">48sp</dimen>
 </resources>

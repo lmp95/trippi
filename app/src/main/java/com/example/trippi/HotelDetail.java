@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -35,6 +36,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.time.Duration;
 import java.util.ArrayList;
 
 public class HotelDetail extends AppCompatActivity implements RoomRecycleViewAdapter.OnRoomClickListener,
@@ -164,9 +166,7 @@ public class HotelDetail extends AppCompatActivity implements RoomRecycleViewAda
     }
 
     public void sendMessageToHotel(View view){
-        Intent intent = new Intent(this, SendMessageHotel.class);
-        intent.putExtra("MessageHotel", hotel);
-        startActivity(intent);
+        Toast.makeText(this, "Not Available!", Toast.LENGTH_SHORT).show();
     }
 
 }

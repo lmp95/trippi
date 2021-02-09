@@ -5,10 +5,8 @@ import java.util.Date;
 
 public class Booking implements Serializable {
     public String bookID;
-    public String hotelID;
-    public String hotelName;
-    public String roomID;
-    public String roomType;
+    public Hotel hotel;
+    public Room room;
     public String fromDate;
     public String toDate;
     public boolean extraBed;
@@ -20,14 +18,12 @@ public class Booking implements Serializable {
     public Booking() {
     }
 
-    public Booking(String bookID, String hotelID, String hotelName, String roomID, String roomType,
-                   String fromDate, String toDate, boolean extraBed, float totalPrice, String userID,
+    public Booking(String bookID, Hotel hotel, Room room, String fromDate,
+                   String toDate, boolean extraBed, float totalPrice, String userID,
                    String billingCardName, String billingEmail) {
         this.bookID = bookID;
-        this.hotelID = hotelID;
-        this.hotelName = hotelName;
-        this.roomID = roomID;
-        this.roomType = roomType;
+        this.hotel = hotel;
+        this.room = room;
         this.fromDate = fromDate;
         this.toDate = toDate;
         this.extraBed = extraBed;

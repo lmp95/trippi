@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -44,8 +45,8 @@ public class HotelBooking extends AppCompatActivity {
     Date fromDate;
     Date toDate;
     String totalDays;
-    String roomBedType;
     RadioGroup bedTypeRadioGroup;
+    RadioButton bedRoomRadioButton;
     Switch extraBedSwitch;
     AlertDialog.Builder builder;
     boolean extraBed;
@@ -53,6 +54,7 @@ public class HotelBooking extends AppCompatActivity {
     float totalPrice;
     float extraBedPrice = (float) 35.0;
     SimpleDateFormat simpleDate =  new SimpleDateFormat("dd/MM/yyyy");
+    int selectedBedRoom;
 
 
     @SuppressLint("SetTextI18n")
@@ -119,11 +121,17 @@ public class HotelBooking extends AppCompatActivity {
             showAlertDialog("Please Choose Bed Room", "Bed Room Required");
         }
         else{
+            selectedBedRoom = bedTypeRadioGroup.getCheckedRadioButtonId();
+            bedRoomRadioButton = findViewById(selectedBedRoom);
+            if(bedRoomRadioButton.getText() == "Double Bed"){
+                room = new DoubleBed(room.id, room.name, room.price);
+            }
+            else {
+                room = new TwinBed(room.id, room.name, room.price);
+            }
             booking = new Booking();
-            booking.hotelID = hotel.id;
-            booking.hotelName = hotel.name;
-            booking.roomID = room.id;
-            booking.roomType = room.name;
+            booking.hotel = hotel;
+            booking.room = room;
             booking.extraBed = extraBed;
             booking.totalPrice = totalPrice;
             booking.fromDate = simpleDate.format(fromDate);

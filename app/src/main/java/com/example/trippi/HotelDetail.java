@@ -6,10 +6,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -55,8 +57,7 @@ public class HotelDetail extends AppCompatActivity implements RoomRecycleViewAda
     CardView roomCardView;
     Hotel hotel;
     GoogleMap mMap;
-    double currentLat, currentLng;
-    LatLng currentLatLng;
+    float currentLat, currentLng;
     Room room;
 
     @Override
@@ -136,9 +137,8 @@ public class HotelDetail extends AppCompatActivity implements RoomRecycleViewAda
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
-        currentLat = location.getLatitude();
-        currentLng = location.getLongitude();
-        currentLatLng = new LatLng(currentLat, currentLng);
+        currentLat = (float) location.getLatitude();
+        currentLng = (float) location.getLongitude();
     }
 
     public void onBookButtonClick(View view) {
@@ -167,26 +167,54 @@ public class HotelDetail extends AppCompatActivity implements RoomRecycleViewAda
     public void showDirectionOnMap(View view) {
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         LocationListener locationListener = location -> {
-            currentLat = location.getLatitude();
-            currentLng = location.getLongitude();
+            currentLat = (float) location.getLatitude();
+            currentLng = (float) location.getLongitude();
         };
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
+            requestLocationPermission();
         }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
-        Toast.makeText(this, "Lat Lng - " + currentLat + " " + currentLng, Toast.LENGTH_SHORT).show();
+        else{
+            if(currentLat <= 0 && currentLng <= 0){
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 10, locationListener);
+                Toast.makeText(this, "Please try again!", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Intent intent = new Intent(this, DirectionGoogleMap.class);
+                intent.putExtra("LATITUDE", currentLat);
+                intent.putExtra("LONGITUDE", currentLng);
+                intent.putExtra("HotelLat", hotel.lat);
+                intent.putExtra("HotelLng", hotel.lng);
+                startActivity(intent);
+            }
+        }
     }
 
     public void sendMessageToHotel(View view){
         Toast.makeText(this, "Not Available!", Toast.LENGTH_SHORT).show();
+    }
+
+    public void requestLocationPermission() {
+        if (ContextCompat.checkSelfPermission(HotelDetail.this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(HotelDetail.this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults){
+        if (requestCode == 1) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                if (ContextCompat.checkSelfPermission(HotelDetail.this,
+                        Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                requestLocationPermission();
+            }
+        }
     }
 
 }

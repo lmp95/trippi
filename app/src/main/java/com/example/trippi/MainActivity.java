@@ -24,11 +24,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        requestLocationPermission();
-
         bottomNavigationView = findViewById(R.id.bottomNaivgationView); // initialize the bottom navigation
         bottomNavigationView.setSelectedItemId(R.id.bottomNavigationHotelIcon); // set default bottom navigation icon
-
         bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
         loadFragment(HotelFragment.newInstance("", ""));
 
@@ -42,22 +39,19 @@ public class MainActivity extends AppCompatActivity {
 
     //     Navigation icon click configuration
     BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    switch (item.getItemId()){
-                        case R.id.bottomNavigationHotelIcon:
-                            loadFragment(HotelFragment.newInstance("", ""));
-                            return true;
-                        case R.id.bottomNavigationMessageIcon:
-                            loadFragment(MessageFragment.newInstance("", ""));
-                            return true;
-                        case R.id.bottomNavigationProfileIcon:
-                            loadFragment(ProfileFragment.newInstance("", ""));
-                            return true;
-                    }
-                    return true;
+            item -> {
+                switch (item.getItemId()){
+                    case R.id.bottomNavigationHotelIcon:
+                        loadFragment(HotelFragment.newInstance("", ""));
+                        return true;
+                    case R.id.bottomNavigationMessageIcon:
+                        loadFragment(MessageFragment.newInstance("", ""));
+                        return true;
+                    case R.id.bottomNavigationProfileIcon:
+                        loadFragment(ProfileFragment.newInstance("", ""));
+                        return true;
                 }
+                return true;
             };
 
     @Override
@@ -66,26 +60,11 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    public void requestLocationPermission() {
-        if (ContextCompat.checkSelfPermission(MainActivity.this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(MainActivity.this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
-        }
-    }
-
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults){
-        if (requestCode == 1) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                if (ContextCompat.checkSelfPermission(MainActivity.this,
-                        Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show();
-            }
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.actionbarSearch){
+            Toast.makeText(getApplicationContext(), "Unavailable", Toast.LENGTH_SHORT).show();
         }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -19,7 +19,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Trippi">
-        <activity android:name=".DirectionGoogleMap"></activity>
+        <activity android:name=".Compass"></activity>
+        <activity android:name=".DirectionGoogleMap" />
         <activity android:name=".BookingComplete" />
         <activity
             android:name=".BookingPayment"

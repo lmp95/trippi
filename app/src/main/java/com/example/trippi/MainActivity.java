@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
@@ -63,7 +64,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.actionbarSearch){
-            Toast.makeText(getApplicationContext(), "Unavailable", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), "Unavailable", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(), Compass.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }

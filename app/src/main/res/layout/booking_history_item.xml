@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="@dimen/margin_left"
+    android:layout_marginRight="@dimen/margin_right">
+
+    <TextView
+        android:id="@+id/historyHotelNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hotel Name"
+        android:textSize="@dimen/hotel_title" />
+
+    <TextView
+        android:id="@+id/historyHotelFromDateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/historyHotelNameTextView"
+        android:text="From Date"
+        android:textSize="@dimen/hotel_text" />
+
+    <TextView
+        android:id="@+id/histroyRoomNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/historyHotelFromDateTextView"
+        android:text="Room Name"
+        android:textSize="@dimen/hotel_text" />
+
+    <TextView
+        android:id="@+id/historyHotelTotalPriceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/historyHotelFromDateTextView"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="@dimen/pad_right"
+        android:text="$ 0.0"
+        android:textSize="@dimen/hotel_text" />
+</RelativeLayout>

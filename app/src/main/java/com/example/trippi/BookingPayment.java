@@ -95,7 +95,7 @@ public class BookingPayment extends AppCompatActivity {
                 .setPositiveButton("Yes", (dialog, id) -> {
                     isCreated = createBooking();
                     if(isCreated){
-                        dbReference.child(bookingID).setValue(booking, (error, ref) -> {
+                        dbReference.child("ee7c34b0").child(bookingID).setValue(booking, (error, ref) -> {
                             Intent intent = new Intent(getApplicationContext(), BookingComplete.class);
                             startActivity(intent);
                         });

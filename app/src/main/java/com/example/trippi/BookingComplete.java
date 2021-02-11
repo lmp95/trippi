@@ -35,7 +35,7 @@ public class BookingComplete extends AppCompatActivity {
         animator.setInterpolator(new DecelerateInterpolator());
         animator.start();
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.fade_in);
-        animation.setStartOffset(1500);
+        animation.setStartOffset(1000);
         paymentCompleteTextView.startAnimation(animation);
         backToHomeButton.startAnimation(animation);
         imageView.startAnimation(animation);

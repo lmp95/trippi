@@ -49,7 +49,6 @@ public class HotelBooking extends AppCompatActivity {
     RadioButton bedRoomRadioButton;
     Switch extraBedSwitch;
     AlertDialog.Builder builder;
-    boolean extraBed;
     LinearLayout extraBedLinearLayout;
     float totalPrice;
     float extraBedPrice = (float) 35.0;
@@ -65,6 +64,7 @@ public class HotelBooking extends AppCompatActivity {
         addBackAction();
         hotel = (Hotel) getIntent().getSerializableExtra("BookHotel");
         room = (Room) getIntent().getSerializableExtra("BookRoom");
+        booking = new Booking();
         builder = new AlertDialog.Builder(this);
         hotelNameTextView = findViewById(R.id.bookHotelNameTextView);
         hotelTypeTextView = findViewById(R.id.bookHotelRoomTypeTextView);
@@ -81,29 +81,25 @@ public class HotelBooking extends AppCompatActivity {
         hotelPriceTextView.setText(room.price + " per night");
         MaterialDatePicker.Builder<Pair<Long, Long>> datePickerBuilder = MaterialDatePicker.Builder.dateRangePicker();
         datePicker = datePickerBuilder.build();
-        datePicker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Pair<Long, Long>>() {
-            @Override
-            public void onPositiveButtonClick(Pair<Long, Long> selection) {
-                fromDate = new Date(selection.first);
-                toDate = new Date(selection.second);
-                long different = toDate.getTime() - fromDate.getTime();
-                totalDays = String.valueOf(TimeUnit.DAYS.convert(different, TimeUnit.MILLISECONDS));
-                hotelBookTotalDay.setText(totalDays + " Days");
-                totalPrice = (room.price * Float.parseFloat(totalDays)) + extraBedPrice;
-                totalPriceTextView.setText("$ " + totalPrice);
-            }
+        datePicker.addOnPositiveButtonClickListener((MaterialPickerOnPositiveButtonClickListener<Pair<Long, Long>>) selection -> {
+            fromDate = new Date(selection.first);
+            toDate = new Date(selection.second);
+            long different = toDate.getTime() - fromDate.getTime();
+            totalDays = String.valueOf(TimeUnit.DAYS.convert(different, TimeUnit.MILLISECONDS));
+            hotelBookTotalDay.setText(totalDays + " Days");
+            totalPrice = booking.calculateTotalPrice(Float.parseFloat(totalDays), room.price, booking.extraBed);
+            totalPriceTextView.setText("$ " + totalPrice);
         });
         extraBedSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if(isChecked){
-                totalPrice += extraBedPrice;
                 extraBedLinearLayout.setVisibility(View.VISIBLE);
-                extraBed = true;
+                booking.extraBed = true;
             }
             else {
-                totalPrice -= extraBedPrice;
                 extraBedLinearLayout.setVisibility(View.INVISIBLE);
-                extraBed = false;
+                booking.extraBed = false;
             }
+            totalPrice = booking.updatePrice(totalPrice, booking.extraBed);
             extraBedPriceTextView.setText("$ " + extraBedPrice);
             totalPriceTextView.setText("$ " + totalPrice);
         });
@@ -129,10 +125,8 @@ public class HotelBooking extends AppCompatActivity {
             else {
                 room = new TwinBed(room.id, room.name, room.price);
             }
-            booking = new Booking();
             booking.hotel = hotel;
             booking.room = room;
-            booking.extraBed = extraBed;
             booking.totalPrice = totalPrice;
             booking.fromDate = simpleDate.format(fromDate);
             booking.toDate = simpleDate.format(toDate);

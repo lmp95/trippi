@@ -1,5 +1,7 @@
 package com.example.trippi;
 
+import android.util.Log;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -32,4 +34,26 @@ public class Booking implements Serializable {
         this.billingCardName = billingCardName;
         this.billingEmail = billingEmail;
     }
+
+    public float calculateTotalPrice(float totalDay, float roomPrice, boolean isExtraBed) {
+        float totalPrice;
+        if(isExtraBed){
+            totalPrice = (totalDay * roomPrice) + 35.0f;
+        }
+        else{
+            totalPrice = (totalDay * roomPrice);
+        }
+        return totalPrice;
+    }
+
+    public float updatePrice(float totalPrice, boolean isExtraBed){
+        if(isExtraBed){
+            totalPrice += 35.0f;
+        }
+        else{
+            totalPrice -= 35.0f;
+        }
+        return totalPrice;
+    }
+
 }

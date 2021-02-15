@@ -1,13 +1,10 @@
 package com.example.trippi;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -17,7 +14,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -119,12 +115,10 @@ public class BookingPayment extends AppCompatActivity {
     }
 
     private boolean createBooking() {
-
         bookingID = UUID.randomUUID().toString();
         booking.bookID = bookingID;
         booking.billingCardName = editTextFullName.getText().toString();
         booking.billingEmail = editTextEmail.getText().toString();
-        booking.userID = "123FGEFDW";
         return true;
     }
 

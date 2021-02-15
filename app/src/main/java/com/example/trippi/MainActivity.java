@@ -11,10 +11,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView; // declare bottom navigation view
+    UserAccount userAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,8 +29,29 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView = findViewById(R.id.bottomNaivgationView); // initialize the bottom navigation
         bottomNavigationView.setSelectedItemId(R.id.bottomNavigationHotelIcon); // set default bottom navigation icon
         bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
-        loadFragment(HotelFragment.newInstance("", ""));
+        userAccount = getUser();
+    }
 
+    public UserAccount getUser() {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child("ee7c34b0");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                userAccount = snapshot.getValue(UserAccount.class);
+                userAccount.uID = snapshot.getKey();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("User", userAccount);
+                Fragment hotelFragment = new HotelFragment();
+                hotelFragment.setArguments(bundle);
+                loadFragment(hotelFragment);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return userAccount;
     }
 
     private void loadFragment(Fragment fragment){
@@ -36,15 +63,21 @@ public class MainActivity extends AppCompatActivity {
     //     Navigation icon click configuration
     BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener =
             item -> {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("User", userAccount);
                 switch (item.getItemId()){
                     case R.id.bottomNavigationHotelIcon:
-                        loadFragment(HotelFragment.newInstance("", ""));
+                        Fragment hotelFragment = new HotelFragment();
+                        hotelFragment.setArguments(bundle);
+                        loadFragment(hotelFragment);
                         return true;
                     case R.id.bottomNavigationHistoryIcon:
                         loadFragment(HistoryFragment.newInstance("", ""));
                         return true;
                     case R.id.bottomNavigationProfileIcon:
-                        loadFragment(ProfileFragment.newInstance("", ""));
+                        Fragment profileFragment = new ProfileFragment();
+                        profileFragment.setArguments(bundle);
+                        loadFragment(profileFragment);
                         return true;
                 }
                 return true;

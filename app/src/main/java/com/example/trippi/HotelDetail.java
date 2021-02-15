@@ -2,7 +2,6 @@ package com.example.trippi;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
@@ -14,13 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -40,7 +39,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.time.Duration;
 import java.util.ArrayList;
 
 public class HotelDetail extends AppCompatActivity implements RoomRecycleViewAdapter.OnRoomClickListener,
@@ -59,6 +57,7 @@ public class HotelDetail extends AppCompatActivity implements RoomRecycleViewAda
     GoogleMap mMap;
     float currentLat, currentLng;
     Room room;
+    UserAccount userAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +65,7 @@ public class HotelDetail extends AppCompatActivity implements RoomRecycleViewAda
         setContentView(R.layout.activity_hotel_detail);
         addBackAction();
         hotel = (Hotel) getIntent().getSerializableExtra("Hotel");
+        userAccount = (UserAccount) getIntent().getSerializableExtra("Account");
         roomList = new ArrayList<>();
         roomCardView = findViewById(R.id.roomCardView);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.hotelMapView);
@@ -145,6 +145,7 @@ public class HotelDetail extends AppCompatActivity implements RoomRecycleViewAda
         Intent intent = new Intent(this, HotelBooking.class);
         intent.putExtra("BookHotel", hotel);
         intent.putExtra("BookRoom", room);
+        intent.putExtra("Account", userAccount);
         startActivity(intent);
     }
 

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,7 @@ public class HotelFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     ArrayList<Hotel> hotelArrayList = new ArrayList<>();
+    UserAccount userAccount;
 
     public HotelFragment() {
         // Required empty public constructor
@@ -67,6 +69,8 @@ public class HotelFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        Bundle bundle = this.getArguments();
+        userAccount = (UserAccount) bundle.getSerializable("User");
     }
 
     @Override
@@ -100,6 +104,7 @@ public class HotelFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(HotelFragment.this.getActivity(), HotelDetail.class);
                 intent.putExtra("Hotel", hotelArrayList.get(position));
+                intent.putExtra("Account", userAccount);
                 startActivity(intent);
             }
         });

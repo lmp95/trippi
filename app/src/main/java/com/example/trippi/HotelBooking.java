@@ -3,19 +3,15 @@ package com.example.trippi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.util.Pair;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -33,6 +29,7 @@ public class HotelBooking extends AppCompatActivity {
 
     Hotel hotel;
     Room room;
+    UserAccount userAccount;
     Booking booking;
     TextView hotelNameTextView;
     TextView hotelTypeTextView;
@@ -64,6 +61,7 @@ public class HotelBooking extends AppCompatActivity {
         addBackAction();
         hotel = (Hotel) getIntent().getSerializableExtra("BookHotel");
         room = (Room) getIntent().getSerializableExtra("BookRoom");
+        userAccount = (UserAccount) getIntent().getSerializableExtra("Account");
         booking = new Booking();
         builder = new AlertDialog.Builder(this);
         hotelNameTextView = findViewById(R.id.bookHotelNameTextView);
@@ -130,6 +128,7 @@ public class HotelBooking extends AppCompatActivity {
             booking.totalPrice = totalPrice;
             booking.fromDate = simpleDate.format(fromDate);
             booking.toDate = simpleDate.format(toDate);
+            booking.userID = userAccount.uID;
             Intent intent = new Intent(this, BookingPayment.class);
             intent.putExtra("Booking", booking);
             startActivity(intent);

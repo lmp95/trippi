@@ -21,14 +21,15 @@ public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView; // declare bottom navigation view
     UserAccount userAccount;
+    Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        bundle = new Bundle();
         bottomNavigationView = findViewById(R.id.bottomNaivgationView); // initialize the bottom navigation
         bottomNavigationView.setSelectedItemId(R.id.bottomNavigationHotelIcon); // set default bottom navigation icon
-        bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
         userAccount = getUser();
     }
 
@@ -39,8 +40,8 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 userAccount = snapshot.getValue(UserAccount.class);
                 userAccount.uID = snapshot.getKey();
-                Bundle bundle = new Bundle();
                 bundle.putSerializable("User", userAccount);
+                bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
                 Fragment hotelFragment = new HotelFragment();
                 hotelFragment.setArguments(bundle);
                 loadFragment(hotelFragment);
@@ -63,8 +64,6 @@ public class MainActivity extends AppCompatActivity {
     //     Navigation icon click configuration
     BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener =
             item -> {
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("User", userAccount);
                 switch (item.getItemId()){
                     case R.id.bottomNavigationHotelIcon:
                         Fragment hotelFragment = new HotelFragment();

@@ -99,14 +99,11 @@ public class HotelFragment extends Fragment {
 
             }
         });
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(HotelFragment.this.getActivity(), HotelDetail.class);
-                intent.putExtra("Hotel", hotelArrayList.get(position));
-                intent.putExtra("Account", userAccount);
-                startActivity(intent);
-            }
+        listView.setOnItemClickListener((parent, view1, position, id) -> {
+            Intent intent = new Intent(HotelFragment.this.getActivity(), HotelDetail.class);
+            intent.putExtra("Hotel", hotelArrayList.get(position));
+            intent.putExtra("Account", userAccount);
+            startActivity(intent);
         });
         return view;
     }

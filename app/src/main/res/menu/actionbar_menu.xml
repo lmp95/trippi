@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/actionbarCompass"
-        android:icon="@drawable/ic_compass"
+        android:id="@+id/actionbarSearch"
+        android:icon="@drawable/ic_search"
         android:iconTint="#FFFFFF"
         android:title="Search"
         app:showAsAction="always" />

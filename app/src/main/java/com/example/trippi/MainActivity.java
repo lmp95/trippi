@@ -88,13 +88,13 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if(item.getItemId() == R.id.actionbarCompass){
-//            Toast.makeText(getApplicationContext(), "Unavailable", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getApplicationContext(), Compass.class);
-            startActivity(intent);
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        if(item.getItemId() == R.id.actionbarCompass){
+////            Toast.makeText(getApplicationContext(), "Unavailable", Toast.LENGTH_SHORT).show();
+//            Intent intent = new Intent(getApplicationContext(), Compass.class);
+//            startActivity(intent);
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 }

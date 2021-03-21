@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/margin_top">
+
+    <ImageView
+        android:id="@+id/nearbyPlaceImg"
+        android:layout_width="200dp"
+        android:layout_height="150dp"
+        android:foreground="@drawable/img_overlay"
+        android:scaleType="centerCrop"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <TextView
+        android:id="@+id/nearbyPlaceTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="TextView"
+        android:textAllCaps="true"
+        android:textColor="@color/matte_black"
+        android:textSize="@dimen/hotel_text"
+        android:textStyle="bold" />
+</RelativeLayout>

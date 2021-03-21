@@ -2,12 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/bottomNavigationHomeIcon"
+        android:icon="@drawable/ic_home"
+        android:title="Home" />
+    <item
         android:id="@+id/bottomNavigationHotelIcon"
         android:icon="@drawable/ic_hotel"
         android:title="Hotel" />
-    <item android:id="@+id/bottomNavigationHistoryIcon"
-        android:title="History"
-        android:icon="@drawable/ic_history"/>
+    <item android:id="@+id/bottomNavigationMessageIcon"
+        android:title="Message"
+        android:icon="@drawable/ic_message"/>
     <item android:id="@+id/bottomNavigationProfileIcon"
         android:title="Profile"
         android:icon="@drawable/ic_profile"/>

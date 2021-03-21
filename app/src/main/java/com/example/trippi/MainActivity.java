@@ -5,10 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -29,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         bundle = new Bundle();
         bottomNavigationView = findViewById(R.id.bottomNaivgationView); // initialize the bottom navigation
-        bottomNavigationView.setSelectedItemId(R.id.bottomNavigationHotelIcon); // set default bottom navigation icon
+        bottomNavigationView.setSelectedItemId(R.id.bottomNavigationHomeIcon); // set default bottom navigation icon
         userAccount = getUser();
     }
 
@@ -42,9 +40,8 @@ public class MainActivity extends AppCompatActivity {
                 userAccount.uID = snapshot.getKey();
                 bundle.putSerializable("User", userAccount);
                 bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
-                Fragment hotelFragment = new HotelFragment();
-                hotelFragment.setArguments(bundle);
-                loadFragment(hotelFragment);
+                Fragment homeFragment = new HomeFragment();
+                loadFragment(homeFragment);
             }
 
             @Override
@@ -65,12 +62,15 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener =
             item -> {
                 switch (item.getItemId()){
+                    case R.id.bottomNavigationHomeIcon:
+                        loadFragment(HomeFragment.newInstance("", ""));
+                        return true;
                     case R.id.bottomNavigationHotelIcon:
                         Fragment hotelFragment = new HotelFragment();
                         hotelFragment.setArguments(bundle);
                         loadFragment(hotelFragment);
                         return true;
-                    case R.id.bottomNavigationHistoryIcon:
+                    case R.id.bottomNavigationMessageIcon:
                         loadFragment(HistoryFragment.newInstance("", ""));
                         return true;
                     case R.id.bottomNavigationProfileIcon:

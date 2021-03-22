@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -37,7 +38,10 @@ public class NearbyRecycleViewAdapter extends RecyclerView.Adapter<NearbyRecycle
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.nearbyPlaceTextView.setText(nearbyPlaceArrayList.get(position).name);
-        holder.nearbyPlaceImageView.setImageResource(R.drawable.ic_launcher_background);
+//        holder.nearbyPlaceImageView.setImageResource(R.drawable.ic_launcher_background);
+        holder.nearbyPlaceRatingTextView.setText(String.valueOf(nearbyPlaceArrayList.get(position).rating));
+        holder.nearbyPlaceRatingBar.setRating(nearbyPlaceArrayList.get(position).rating);
+        new DownloadHotelImageFromUrl(holder.nearbyPlaceImageView).execute(nearbyPlaceArrayList.get(position).image);
     }
 
     @Override
@@ -48,6 +52,8 @@ public class NearbyRecycleViewAdapter extends RecyclerView.Adapter<NearbyRecycle
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView nearbyPlaceTextView;
         ImageView nearbyPlaceImageView;
+        TextView nearbyPlaceRatingTextView;
+        RatingBar nearbyPlaceRatingBar;
         OnNearbyPlaceClickListener onNearbyPlaceClickListener;
 
         public ViewHolder(@NonNull View itemView, OnNearbyPlaceClickListener onNearbyPlaceClickListener) {
@@ -55,6 +61,8 @@ public class NearbyRecycleViewAdapter extends RecyclerView.Adapter<NearbyRecycle
             this.onNearbyPlaceClickListener = onNearbyPlaceClickListener;
             nearbyPlaceImageView = itemView.findViewById(R.id.nearbyPlaceImg);
             nearbyPlaceTextView = itemView.findViewById(R.id.nearbyPlaceTextView);
+            nearbyPlaceRatingTextView = itemView.findViewById(R.id.nearbyPlaceRatingTextView);
+            nearbyPlaceRatingBar = itemView.findViewById(R.id.nearbyPlaceRatingBar);
         }
     }
 

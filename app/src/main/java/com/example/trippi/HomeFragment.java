@@ -33,10 +33,11 @@ public class HomeFragment extends Fragment implements NearbyRecycleViewAdapter.O
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    public static String url = " https://maps.googleapis.com/maps/api/place/nearbysearch/" +
+    private static final String KEY = "AIzaSyCHcBQyizoE6ydrWWb2S-MPAvAtE5wywps";
+    public String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/" +
             "json?location=16.7755,96.1418" +
             "&radius=800" +
-            "&type=lodging&key=AIzaSyCHcBQyizoE6ydrWWb2S-MPAvAtE5wywps";
+            "&type=lodging&key=" + KEY;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -109,6 +110,16 @@ public class HomeFragment extends Fragment implements NearbyRecycleViewAdapter.O
                         nearbyPlace.name = obj.getString("name");
                         if(obj.has("rating")){
                             nearbyPlace.rating = Float.parseFloat(obj.getString("rating"));
+                        }
+                        if(obj.has("photos")){
+                            JSONArray placePhotos = obj.getJSONArray("photos");
+                            for (int j = 0; j < placePhotos.length(); j++) {
+                                String photoRef = placePhotos.getJSONObject(j).getString("photo_reference");
+                                nearbyPlace.image = "https://maps.googleapis.com/maps/api/place/photo?" +
+                                        "maxwidth=400&maxheight=600" +
+                                        "&photoreference=" + photoRef +
+                                        "&key=" + KEY;
+                            }
                         }
                         nearbyPlaceArrayList.add(nearbyPlace);
                     }

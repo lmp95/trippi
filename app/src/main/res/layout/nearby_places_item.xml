@@ -1,27 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/margin_top">
+    android:id="@+id/nearbyPlaceCardView"
+    android:layout_width="200dp"
+    android:layout_height="150dp"
+    android:layout_marginLeft="@dimen/margin_left"
+    android:layout_marginRight="@dimen/margin_right"
+    android:paddingTop="@dimen/margin_top"
+    android:paddingBottom="@dimen/margin_bottom"
+    app:cardCornerRadius="5dp">
 
-    <ImageView
-        android:id="@+id/nearbyPlaceImg"
-        android:layout_width="200dp"
-        android:layout_height="150dp"
-        android:foreground="@drawable/img_overlay"
-        android:scaleType="centerCrop"
-        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/nearbyPlaceTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="TextView"
-        android:textAllCaps="true"
-        android:textColor="@color/matte_black"
-        android:textSize="@dimen/hotel_text"
-        android:textStyle="bold" />
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/nearbyPlaceImg"
+            android:layout_width="200dp"
+            android:layout_height="150dp"
+            android:foreground="@drawable/img_overlay"
+            android:scaleType="centerCrop"
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+        <RatingBar
+            android:id="@+id/nearbyPlaceRatingBar"
+            style="@android:style/Widget.DeviceDefault.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="3dp"
+            android:layout_marginBottom="@dimen/pad_bottom"
+            android:layout_toLeftOf="@id/nearbyPlaceRatingTextView"
+            android:numStars="1"
+            android:progressTint="#FFC107" />
+
+        <TextView
+            android:id="@+id/nearbyPlaceRatingTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom|right"
+            android:layout_marginRight="@dimen/margin_right"
+            android:layout_marginBottom="14sp"
+            android:text="TextView"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/nearbyPlaceTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:background="#FFFFFF"
+            android:gravity="center"
+            android:lines="2"
+            android:maxLines="2"
+            android:text="TextView"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

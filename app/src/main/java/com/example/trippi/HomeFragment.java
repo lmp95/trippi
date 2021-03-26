@@ -1,6 +1,5 @@
 package com.example.trippi;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -14,9 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,16 +30,20 @@ public class HomeFragment extends Fragment implements NearbyRecycleViewAdapter.O
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final String KEY = "AIzaSyCHcBQyizoE6ydrWWb2S-MPAvAtE5wywps";
-    public String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/" +
+    public String hotelURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/" +
             "json?location=16.7755,96.1418" +
             "&radius=800" +
             "&type=lodging&key=" + KEY;
+    public String restaurantURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/" +
+            "json?location=16.7755,96.1418" +
+            "&radius=800" +
+            "&type=restaurant&key=" + KEY;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     ArrayList<NearbyPlace> nearbyPlaceArrayList;
-    RecyclerView nearbyRecyclerView;
+    RecyclerView nearbyHotelRecyclerView, nearbyRestaurantRecyclerView;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -65,7 +65,6 @@ public class HomeFragment extends Fragment implements NearbyRecycleViewAdapter.O
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        nearbyPlaceArrayList = new ArrayList<>();
     }
 
     @Override
@@ -73,12 +72,18 @@ public class HomeFragment extends Fragment implements NearbyRecycleViewAdapter.O
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        nearbyRecyclerView = view.findViewById(R.id.nearbyPlaceRecyclerView);
-        nearbyRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(),
+        nearbyHotelRecyclerView = view.findViewById(R.id.nearbyHotelRecyclerView);
+        nearbyRestaurantRecyclerView = view.findViewById(R.id.nearbyRestaurantRecyclerView);
+        nearbyHotelRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(),
                 LinearLayoutManager.HORIZONTAL, false));
-        nearbyRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        NearbyRecycleViewAdapter adapter = new NearbyRecycleViewAdapter(view.getContext(), nearbyPlaceArrayList, this);
-        new GetNearbyJSON(view, this).execute();
+        nearbyRestaurantRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(),
+                LinearLayoutManager.HORIZONTAL, false));
+        nearbyHotelRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        nearbyRestaurantRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        NearbyRecycleViewAdapter hotelAdapter = new NearbyRecycleViewAdapter(view.getContext(), nearbyPlaceArrayList, this);
+        NearbyRecycleViewAdapter restaurantAdapter = new NearbyRecycleViewAdapter(view.getContext(), nearbyPlaceArrayList, this);
+        new GetNearbyJSON(view, this, hotelURL).execute("hotel");
+        new GetNearbyJSON(view, this, restaurantURL).execute("restaurant");
         return view;
     }
 
@@ -90,21 +95,24 @@ public class HomeFragment extends Fragment implements NearbyRecycleViewAdapter.O
         View view;
         NearbyRecycleViewAdapter.OnNearbyPlaceClickListener listener;
         ProgressBar progressBar;
+        String url;
 
-        public GetNearbyJSON(View view, NearbyRecycleViewAdapter.OnNearbyPlaceClickListener listener) {
+        public GetNearbyJSON(View view, NearbyRecycleViewAdapter.OnNearbyPlaceClickListener listener, String url) {
             this.view = view;
             this.listener = listener;
+            this.url = url;
         }
 
         @Override
         protected String doInBackground(String... strings) {
+            nearbyPlaceArrayList = new ArrayList<>();
             HttpRequestHandler handler = new HttpRequestHandler();
             String jsonData = handler.requestUrl(url);
             if(jsonData != null){
                 try {
                     JSONObject jsonObject = new JSONObject(jsonData);
                     JSONArray jsonArray = jsonObject.getJSONArray("results");
-                    for (int i = 0; i < jsonArray.length(); i++) {
+                    for (int i = 0; i < 6; i++) {
                         NearbyPlace nearbyPlace = new NearbyPlace();
                         JSONObject obj = jsonArray.getJSONObject(i);
                         nearbyPlace.name = obj.getString("name");
@@ -127,6 +135,12 @@ public class HomeFragment extends Fragment implements NearbyRecycleViewAdapter.O
                     e.printStackTrace();
                 }
             }
+            if(strings[0] == "hotel"){
+                return "Hotel";
+            }
+            else if (strings[0] == "restaurant"){
+                return "Restaurant";
+            }
             return null;
         }
 
@@ -140,9 +154,16 @@ public class HomeFragment extends Fragment implements NearbyRecycleViewAdapter.O
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            progressBar.setVisibility(View.INVISIBLE);
-            NearbyRecycleViewAdapter adapter = new NearbyRecycleViewAdapter(view.getContext(), nearbyPlaceArrayList, listener);
-            nearbyRecyclerView.setAdapter(adapter);
+            if(s == "Hotel"){
+                progressBar.setVisibility(View.INVISIBLE);
+                NearbyRecycleViewAdapter adapter = new NearbyRecycleViewAdapter(view.getContext(), nearbyPlaceArrayList, listener);
+                nearbyHotelRecyclerView.setAdapter(adapter);
+            }
+            else{
+                progressBar.setVisibility(View.INVISIBLE);
+                NearbyRecycleViewAdapter adapter = new NearbyRecycleViewAdapter(view.getContext(), nearbyPlaceArrayList, listener);
+                nearbyRestaurantRecyclerView.setAdapter(adapter);
+            }
         }
     }
 }

@@ -50,7 +50,7 @@ public class BookingPayment extends AppCompatActivity {
         editTextExpireMonth = findViewById(R.id.editTextExpireMonth);
         editTextExpireYear = findViewById(R.id.editTextExpireYear);
         editTextCVV = findViewById(R.id.editTextCVV);
-        editTextEmail = findViewById(R.id.editTextEmail);
+        editTextEmail = findViewById(R.id.editTextLoginPassword);
         hotelNameTextView.setText(booking.hotel.name);
         roomTypeTextView.setText(booking.room.name);
         fromDateTextView.setText(booking.fromDate);

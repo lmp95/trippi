@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                         loadFragment(hotelFragment);
                         return true;
                     case R.id.bottomNavigationMessageIcon:
-                        loadFragment(HistoryFragment.newInstance("", ""));
+                        loadFragment(MessageFragment.newInstance("", ""));
                         return true;
                     case R.id.bottomNavigationProfileIcon:
                         Fragment profileFragment = new ProfileFragment();

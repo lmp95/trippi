@@ -38,12 +38,17 @@ public class HomeFragment extends Fragment implements NearbyRecycleViewAdapter.O
             "json?location=16.7755,96.1418" +
             "&radius=800" +
             "&type=restaurant&key=" + KEY;
+    public String placeURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/" +
+            "json?location=16.7755,96.1418" +
+            "&radius=800" +
+            "&type=tourist_attraction&key=" + KEY;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     ArrayList<NearbyPlace> nearbyPlaceArrayList;
-    RecyclerView nearbyHotelRecyclerView, nearbyRestaurantRecyclerView;
+    RecyclerView nearbyHotelRecyclerView, nearbyRestaurantRecyclerView, nearbyPlaceRecyclerView;
+    ProgressBar hotelProgressBar, restaurantProgressBar, placeProgressBar;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -72,18 +77,24 @@ public class HomeFragment extends Fragment implements NearbyRecycleViewAdapter.O
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        hotelProgressBar = view.findViewById(R.id.nearbyHotelProgressBar);
+        restaurantProgressBar = view.findViewById(R.id.nearbyRestaurantProgressBar);
+        placeProgressBar = view.findViewById(R.id.attractionPlaceProgressBar);
         nearbyHotelRecyclerView = view.findViewById(R.id.nearbyHotelRecyclerView);
         nearbyRestaurantRecyclerView = view.findViewById(R.id.nearbyRestaurantRecyclerView);
+        nearbyPlaceRecyclerView = view.findViewById(R.id.nearbyAttractionPlaceRecyclerView);
         nearbyHotelRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(),
                 LinearLayoutManager.HORIZONTAL, false));
         nearbyRestaurantRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(),
                 LinearLayoutManager.HORIZONTAL, false));
+        nearbyPlaceRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(),
+                LinearLayoutManager.HORIZONTAL, false));
         nearbyHotelRecyclerView.setItemAnimator(new DefaultItemAnimator());
         nearbyRestaurantRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        NearbyRecycleViewAdapter hotelAdapter = new NearbyRecycleViewAdapter(view.getContext(), nearbyPlaceArrayList, this);
-        NearbyRecycleViewAdapter restaurantAdapter = new NearbyRecycleViewAdapter(view.getContext(), nearbyPlaceArrayList, this);
+        nearbyPlaceRecyclerView.setItemAnimator(new DefaultItemAnimator());
         new GetNearbyJSON(view, this, hotelURL).execute("hotel");
         new GetNearbyJSON(view, this, restaurantURL).execute("restaurant");
+        new GetNearbyJSON(view, this, placeURL).execute("tourist attraction");
         return view;
     }
 
@@ -94,7 +105,6 @@ public class HomeFragment extends Fragment implements NearbyRecycleViewAdapter.O
     private class GetNearbyJSON extends AsyncTask<String, Void, String> {
         View view;
         NearbyRecycleViewAdapter.OnNearbyPlaceClickListener listener;
-        ProgressBar progressBar;
         String url;
 
         public GetNearbyJSON(View view, NearbyRecycleViewAdapter.OnNearbyPlaceClickListener listener, String url) {
@@ -141,28 +151,36 @@ public class HomeFragment extends Fragment implements NearbyRecycleViewAdapter.O
             else if (strings[0] == "restaurant"){
                 return "Restaurant";
             }
-            return null;
+            else{
+                return "Tourist Attraction";
+            }
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressBar = view.findViewById(R.id.nearbyHotelProgressBar);
-            progressBar.setVisibility(View.VISIBLE);
+            hotelProgressBar.setVisibility(View.VISIBLE);
+            restaurantProgressBar.setVisibility(View.VISIBLE);
+            placeProgressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             if(s == "Hotel"){
-                progressBar.setVisibility(View.INVISIBLE);
+                hotelProgressBar.setVisibility(View.INVISIBLE);
                 NearbyRecycleViewAdapter adapter = new NearbyRecycleViewAdapter(view.getContext(), nearbyPlaceArrayList, listener);
                 nearbyHotelRecyclerView.setAdapter(adapter);
             }
-            else{
-                progressBar.setVisibility(View.INVISIBLE);
+            else if (s == "Restaurant"){
+                restaurantProgressBar.setVisibility(View.INVISIBLE);
                 NearbyRecycleViewAdapter adapter = new NearbyRecycleViewAdapter(view.getContext(), nearbyPlaceArrayList, listener);
                 nearbyRestaurantRecyclerView.setAdapter(adapter);
+            }
+            else{
+                placeProgressBar.setVisibility(View.INVISIBLE);
+                NearbyRecycleViewAdapter adapter = new NearbyRecycleViewAdapter(view.getContext(), nearbyPlaceArrayList, listener);
+                nearbyPlaceRecyclerView.setAdapter(adapter);
             }
         }
     }

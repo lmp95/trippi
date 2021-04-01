@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".StoryFragment" >
+
+    <TextView
+        android:id="@+id/storyExploreTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_left"
+        android:layout_marginTop="@dimen/margin_top"
+        android:text="Explore"
+        android:textSize="@dimen/hotel_title_xl"
+        android:textStyle="bold" />
+
+    <GridView
+        android:id="@+id/storyGridView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/storyExploreTextView"
+        android:horizontalSpacing="@dimen/margin_right"
+        android:numColumns="2"
+        android:verticalSpacing="@dimen/margin_bottom" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="@dimen/pad_right"
+        android:layout_marginBottom="@dimen/pad_bottom"
+        android:clickable="true"
+        tools:src="@tools:sample/avatars" />
+
+</RelativeLayout>

@@ -9,6 +9,10 @@
         android:id="@+id/bottomNavigationHotelIcon"
         android:icon="@drawable/ic_hotel"
         android:title="Hotel" />
+    <item
+        android:id="@+id/bottomNavigationStoryIcon"
+        android:icon="@drawable/ic_story"
+        android:title="Story" />
     <item android:id="@+id/bottomNavigationMessageIcon"
         android:title="Message"
         android:icon="@drawable/ic_message"/>

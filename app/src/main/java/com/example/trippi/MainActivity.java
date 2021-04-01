@@ -70,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
                         hotelFragment.setArguments(bundle);
                         loadFragment(hotelFragment);
                         return true;
+                    case R.id.bottomNavigationStoryIcon:
+                        loadFragment(StoryFragment.newInstance("", ""));
+                        return true;
                     case R.id.bottomNavigationMessageIcon:
                         loadFragment(MessageFragment.newInstance("", ""));
                         return true;

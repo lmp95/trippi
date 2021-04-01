@@ -19,7 +19,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Trippi">
-        <activity android:name=".LoginSignUpActivity">
+        <activity android:name=".SignUpActivity"></activity>
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -39,8 +40,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCHcBQyizoE6ydrWWb2S-MPAvAtE5wywps" />
 
-        <activity android:name=".MainActivity">
-        </activity>
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 </manifest>

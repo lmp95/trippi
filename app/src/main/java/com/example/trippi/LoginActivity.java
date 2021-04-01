@@ -18,7 +18,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class LoginSignUpActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     TextView forgotPasswordTextView;
     MaterialButton loginMaterialButton;
@@ -58,6 +58,11 @@ public class LoginSignUpActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    public void onCreateAccountClick(View view){
+        Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
+        startActivity(intent);
     }
 
 }

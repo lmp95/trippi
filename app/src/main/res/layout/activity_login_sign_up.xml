@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginSignUpActivity">
+    tools:context=".LoginActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -38,13 +38,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/loginTextView"
+                android:layout_marginLeft="@dimen/margin_left"
+                android:layout_marginRight="@dimen/margin_right"
+                android:layout_marginBottom="@dimen/margin_bottom"
                 android:hint="Email">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextLoginEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_right"
                     android:singleLine="true" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -55,13 +57,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/loginEmailTextField"
+                android:layout_marginLeft="@dimen/margin_left"
+                android:layout_marginRight="@dimen/margin_right"
                 android:hint="Password">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextLoginPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_right"
                     android:inputType="textPassword"
                     android:singleLine="true" />
 
@@ -107,7 +110,7 @@
                 android:layout_below="@id/forgotPasswordTitleTextView" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/signupAccountMaterialButton"
+                android:id="@+id/createAccountMaterialButton"
                 style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
@@ -118,7 +121,8 @@
                 android:layout_marginEnd="@dimen/margin_top"
                 android:layout_marginRight="@dimen/margin_right"
                 android:layout_marginBottom="@dimen/margin_top"
-                android:text="Singup"
+                android:onClick="onCreateAccountClick"
+                android:text="Create Account"
                 android:textColor="@color/dark_cyan"
                 android:textSize="12sp"
                 android:textStyle="bold"

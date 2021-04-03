@@ -1,5 +1,6 @@
 package com.example.trippi;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -28,6 +31,7 @@ public class StoryFragment extends Fragment {
     private String mParam2;
     GridView storyGridView;
     ArrayList<Story> storyArrayList;
+    FloatingActionButton createStoryFloatingActionButton;
 
     public StoryFragment() {
         // Required empty public constructor
@@ -72,8 +76,13 @@ public class StoryFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_story, container, false);
         storyGridView = view.findViewById(R.id.storyGridView);
+        createStoryFloatingActionButton = view.findViewById(R.id.createStoryFloatingActionButton);
         StoryGridViewAdapter adapter = new StoryGridViewAdapter(getContext(), R.layout.story_card_item, storyArrayList);
         storyGridView.setAdapter(adapter);
+        createStoryFloatingActionButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), StoryCreateActivity.class);
+            startActivity(intent);
+        });
         return view;
     }
 }

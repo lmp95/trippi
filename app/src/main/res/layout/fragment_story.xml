@@ -21,19 +21,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/storyExploreTextView"
+        android:layout_marginLeft="@dimen/margin_left"
+        android:layout_marginRight="@dimen/margin_right"
+        android:layout_marginBottom="@dimen/margin_bottom"
         android:horizontalSpacing="@dimen/margin_right"
         android:numColumns="2"
         android:verticalSpacing="@dimen/margin_bottom" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/createStoryFloatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:layout_marginRight="@dimen/pad_right"
         android:layout_marginBottom="@dimen/pad_bottom"
+        android:backgroundTint="@color/dark_cyan"
         android:clickable="true"
-        tools:src="@tools:sample/avatars" />
+        android:elevation="5dp"
+        android:src="@drawable/ic_write"
+        android:text="Write"
+        app:tint="@color/white" />
 
 </RelativeLayout>

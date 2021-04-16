@@ -6,94 +6,97 @@
     android:layout_height="match_parent"
     tools:context=".HomeFragment">
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <RelativeLayout
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/nearbyTypeTextField"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_left"
+            android:layout_marginTop="@dimen/pad_top"
+            android:hint="Select Type">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/nearbyTypeTextField"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-                android:layout_width="match_parent"
+            <AutoCompleteTextView
+                android:id="@+id/nearbyTypeAutoCompleteTextView"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_left"
-                android:layout_marginTop="@dimen/pad_top"
-                android:hint="Select Type">
+                android:layout_marginBottom="@dimen/margin_bottom"
+                android:enabled="false"
+                android:inputType="none"
+                android:paddingTop="@dimen/pad_top"
+                android:singleLine="true"
+                android:textColor="@color/black" />
 
-                <AutoCompleteTextView
-                    android:id="@+id/nearbyTypeAutoCompleteTextView"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_bottom"
-                    android:enabled="false"
-                    android:inputType="none"
-                    android:paddingTop="@dimen/pad_top"
-                    android:singleLine="true"
-                    android:textColor="@color/black" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-            </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/nearbyTypeMaterialButton"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="65dp"
+            android:layout_alignEnd="@id/nearbyTypeTextField"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentBottom="false"
+            android:layout_marginLeft="@dimen/margin_left"
+            android:layout_marginTop="@dimen/pad_top"
+            android:layout_marginRight="@dimen/margin_right"
+            android:layout_marginBottom="@dimen/margin_top"
+            android:backgroundTint="@color/dark_cyan"
+            android:text="Find"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:cornerRadius="5dp"
+            app:strokeColor="@color/dark_cyan"
+            app:strokeWidth="1dp" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/nearbyTypeMaterialButton"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="wrap_content"
-                android:layout_height="65dp"
-                android:layout_alignEnd="@id/nearbyTypeTextField"
-                android:layout_alignParentEnd="false"
-                android:layout_alignParentBottom="false"
-                android:layout_marginLeft="@dimen/margin_left"
-                android:layout_marginTop="@dimen/pad_top"
-                android:layout_marginRight="@dimen/margin_right"
-                android:layout_marginBottom="@dimen/margin_top"
-                android:backgroundTint="@color/dark_cyan"
-                android:text="Find"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                app:cornerRadius="5dp"
-                app:strokeColor="@color/dark_cyan"
-                app:strokeWidth="1dp" />
+        <TextView
+            android:id="@+id/nearbyHotelTitleTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/nearbyTypeMaterialButton"
+            android:layout_marginLeft="@dimen/margin_left"
+            android:layout_marginTop="@dimen/margin_top"
+            android:layout_marginBottom="@dimen/margin_bottom"
+            android:text="Nearby"
+            android:textSize="@dimen/hotel_title" />
 
-            <RelativeLayout
-                android:id="@+id/hotelRelativeLayout"
+        <RelativeLayout
+            android:id="@+id/nearbyPlacesRelativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/nearbyHotelTitleTextView">
+
+            <GridView
+                android:id="@+id/nearbyPlacesGridView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/nearbyTypeTextField">
+                android:layout_marginLeft="@dimen/margin_left"
+                android:layout_marginTop="@dimen/margin_top"
+                android:layout_marginRight="@dimen/margin_right"
+                android:layout_marginBottom="@dimen/margin_bottom"
+                android:horizontalSpacing="8dp"
+                android:numColumns="2"
+                android:verticalSpacing="8dp" />
 
-                <TextView
-                    android:id="@+id/nearbyHotelTitleTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin_left"
-                    android:layout_marginTop="@dimen/margin_top"
-                    android:layout_marginBottom="@dimen/margin_bottom"
-                    android:text="Nearby"
-                    android:textSize="@dimen/hotel_title" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/nearbyHotelRecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:layout_below="@id/nearbyHotelTitleTextView">
-
-                </androidx.recyclerview.widget.RecyclerView>
-
-                <ProgressBar
-                    android:id="@+id/nearbyHotelProgressBar"
-                    style="?android:attr/progressBarStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/nearbyHotelTitleTextView"
-                    android:layout_centerInParent="false"
-                    android:layout_centerVertical="true"
-                    android:visibility="invisible" />
-
-            </RelativeLayout>
+            <ProgressBar
+                android:id="@+id/nearbyPlacesProgressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="false"
+                android:layout_marginLeft="@dimen/margin_left"
+                android:layout_marginTop="@dimen/margin_top"
+                android:layout_marginRight="@dimen/margin_right"
+                android:layout_marginBottom="@dimen/margin_bottom"
+                android:visibility="invisible" />
 
         </RelativeLayout>
-    </ScrollView>
+
+    </RelativeLayout>
 
 </FrameLayout>

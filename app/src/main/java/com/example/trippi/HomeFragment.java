@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.GridView;
 import android.widget.ProgressBar;
 
 import com.google.android.material.button.MaterialButton;
@@ -29,25 +30,22 @@ import java.util.ArrayList;
  * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class HomeFragment extends Fragment implements NearbyRecycleViewAdapter.OnNearbyPlaceClickListener {
+public class HomeFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final String KEY = "AIzaSyCHcBQyizoE6ydrWWb2S-MPAvAtE5wywps";
-    public String hotelURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/" +
-            "json?location=16.7755,96.1418" +
-            "&radius=800" +
-            "&type=lodging&key=" + KEY;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     ArrayList<NearbyPlace> nearbyPlaceArrayList;
     ArrayList<String> nearbyPlacesSpinnerList;
-    RecyclerView nearbyHotelRecyclerView;
+    GridView nearbyPlacesGridView;
     ProgressBar hotelProgressBar;
     AutoCompleteTextView nearbyTypeAutoCompleteTextView;
     MaterialButton nearbyTypeFindButton;
+    String type;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -83,49 +81,56 @@ public class HomeFragment extends Fragment implements NearbyRecycleViewAdapter.O
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        hotelProgressBar = view.findViewById(R.id.nearbyHotelProgressBar);
+        hotelProgressBar = view.findViewById(R.id.nearbyPlacesProgressBar);
         nearbyTypeFindButton = view.findViewById(R.id.nearbyTypeMaterialButton);
         nearbyTypeAutoCompleteTextView = view.findViewById(R.id.nearbyTypeAutoCompleteTextView);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>
                 (getContext(), android.R.layout.simple_dropdown_item_1line, nearbyPlacesSpinnerList);
         nearbyTypeAutoCompleteTextView.setText(nearbyPlacesSpinnerList.get(0));
         nearbyTypeAutoCompleteTextView.setAdapter(arrayAdapter);
-        nearbyHotelRecyclerView = view.findViewById(R.id.nearbyHotelRecyclerView);
-        nearbyHotelRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext(),
-                LinearLayoutManager.HORIZONTAL, false));
-        nearbyHotelRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        new GetNearbyJSON(view, this, hotelURL).execute("hotel");
+        nearbyPlacesGridView = view.findViewById(R.id.nearbyPlacesGridView);
+        type = transformWord(nearbyTypeAutoCompleteTextView.getText().toString());
+        new GetNearbyJSON(view, type).execute();
         nearbyTypeFindButton.setOnClickListener(v -> {
-            Log.d("TAG", "onCreateView: "+ nearbyTypeAutoCompleteTextView.getText().toString());
+            nearbyPlaceArrayList.clear();
+            type = transformWord(nearbyTypeAutoCompleteTextView.getText().toString());
+            new GetNearbyJSON(view, type).execute();
         });
         return view;
     }
 
-    @Override
-    public void onNearbyPlaceClick(int position) {
+    private String transformWord(String type) {
+        return type.replaceAll(" ","_").toLowerCase();
     }
 
     private class GetNearbyJSON extends AsyncTask<String, Void, String> {
         View view;
-        NearbyRecycleViewAdapter.OnNearbyPlaceClickListener listener;
-        String url;
+        String type;
 
-        public GetNearbyJSON(View view, NearbyRecycleViewAdapter.OnNearbyPlaceClickListener listener, String url) {
+        public GetNearbyJSON(View view, String type) {
             this.view = view;
-            this.listener = listener;
-            this.url = url;
+            this.type = type;
         }
 
         @Override
         protected String doInBackground(String... strings) {
+            String nearbyPlaceURL = "https://maps.googleapis.com/maps/api/place/nearbysearch/" +
+                    "json?location=16.7755,96.1418" +
+                    "&radius=800" +
+                    "&type=" + type.toLowerCase() +"&key=" + KEY;
+            int limit = 8;
+            Log.d("TAG", "onCreateView: " + nearbyPlaceURL);
             nearbyPlaceArrayList = new ArrayList<>();
             HttpRequestHandler handler = new HttpRequestHandler();
-            String jsonData = handler.requestUrl(url);
+            String jsonData = handler.requestUrl(nearbyPlaceURL);
             if(jsonData != null){
                 try {
                     JSONObject jsonObject = new JSONObject(jsonData);
                     JSONArray jsonArray = jsonObject.getJSONArray("results");
-                    for (int i = 0; i < jsonArray.length(); i++) {
+                    if(jsonArray.length() < 5){
+                        limit = jsonArray.length();
+                    }
+                    for (int i = 0; i < limit; i++) {
                         NearbyPlace nearbyPlace = new NearbyPlace();
                         JSONObject obj = jsonArray.getJSONObject(i);
                         nearbyPlace.name = obj.getString("name");
@@ -161,8 +166,9 @@ public class HomeFragment extends Fragment implements NearbyRecycleViewAdapter.O
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             hotelProgressBar.setVisibility(View.INVISIBLE);
-            NearbyRecycleViewAdapter adapter = new NearbyRecycleViewAdapter(view.getContext(), nearbyPlaceArrayList, listener);
-            nearbyHotelRecyclerView.setAdapter(adapter);
+            NearbyPlacesGridViewAdapter adapter = new
+                    NearbyPlacesGridViewAdapter(view.getContext(), R.layout.nearby_places_item, nearbyPlaceArrayList);
+            nearbyPlacesGridView.setAdapter(adapter);
         }
     }
 }

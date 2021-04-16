@@ -5,8 +5,6 @@
     android:id="@+id/nearbyPlaceCardView"
     android:layout_width="200dp"
     android:layout_height="150dp"
-    android:layout_marginLeft="@dimen/margin_left"
-    android:layout_marginRight="@dimen/margin_right"
     android:paddingTop="@dimen/margin_top"
     android:paddingBottom="@dimen/margin_bottom"
     app:cardCornerRadius="5dp">
@@ -30,9 +28,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginRight="3dp"
-            android:layout_marginBottom="@dimen/pad_bottom"
             android:layout_toLeftOf="@id/nearbyPlaceRatingTextView"
             android:numStars="1"
+            android:paddingBottom="@dimen/pad_bottom"
             android:progressTint="#FFC107" />
 
         <TextView
@@ -41,9 +39,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_gravity="bottom|right"
+            android:layout_gravity="start"
             android:layout_marginRight="@dimen/margin_right"
-            android:layout_marginBottom="14sp"
+            android:paddingBottom="@dimen/margin_bottom"
             android:text="TextView"
             android:textColor="@color/white"
             android:textSize="12sp"

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="75dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/chatImageCardView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/pad_left"
+        android:layout_marginTop="@dimen/margin_top"
+        android:layout_marginBottom="@dimen/margin_bottom"
+        app:cardBackgroundColor="@color/dark_cyan"
+        app:cardCornerRadius="50dp">
+
+        <ImageView
+            android:id="@+id/chatIconImageView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            app:tint="@color/white"
+            tools:srcCompat="@drawable/ic_group" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/chatNameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/pad_left"
+        android:layout_toRightOf="@id/chatImageCardView"
+        android:text="Group Chat Name"
+        android:textSize="@dimen/hotel_title" />
+
+    <ImageView
+        android:id="@+id/chatArrowIconImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/pad_right"
+        app:srcCompat="@drawable/ic_baseline_keyboard_arrow_right_24" />
+</RelativeLayout>

@@ -1,21 +1,21 @@
 package com.example.trippi;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.GridView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.android.material.button.MaterialButton;
 
@@ -23,6 +23,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.Duration;
 import java.util.ArrayList;
 
 /**
@@ -118,8 +119,7 @@ public class HomeFragment extends Fragment {
                     "json?location=16.7755,96.1418" +
                     "&radius=800" +
                     "&type=" + type.toLowerCase() +"&key=" + KEY;
-            int limit = 8;
-            Log.d("TAG", "onCreateView: " + nearbyPlaceURL);
+            int limit = 10;
             nearbyPlaceArrayList = new ArrayList<>();
             HttpRequestHandler handler = new HttpRequestHandler();
             String jsonData = handler.requestUrl(nearbyPlaceURL);
@@ -133,6 +133,7 @@ public class HomeFragment extends Fragment {
                     for (int i = 0; i < limit; i++) {
                         NearbyPlace nearbyPlace = new NearbyPlace();
                         JSONObject obj = jsonArray.getJSONObject(i);
+                        nearbyPlace.id =  obj.getString("place_id");
                         nearbyPlace.name = obj.getString("name");
                         if(obj.has("rating")){
                             nearbyPlace.rating = Float.parseFloat(obj.getString("rating"));
@@ -168,7 +169,14 @@ public class HomeFragment extends Fragment {
             hotelProgressBar.setVisibility(View.INVISIBLE);
             NearbyPlacesGridViewAdapter adapter = new
                     NearbyPlacesGridViewAdapter(view.getContext(), R.layout.nearby_places_item, nearbyPlaceArrayList);
+            nearbyPlacesGridView.setOnItemClickListener((parent, view, position, id) -> {
+                Intent intent = new Intent(getActivity(), PlaceDetailActivity.class);
+                startActivity(intent);
+            });
             nearbyPlacesGridView.setAdapter(adapter);
         }
     }
 }
+//https://maps.googleapis.com/maps/api/place/details/json?place_id=ChIJexHBjXjrwTARImN7w4e470c
+// &fields=formatted_address,international_phone_number,geometry,opening_hours
+// &key=AIzaSyCHcBQyizoE6ydrWWb2S-MPAvAtE5wywps

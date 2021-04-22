@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".PlaceDetailActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <fragment
+            android:id="@+id/placeDetailMapView"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            app:cameraTargetLat="-33.796923"
+            app:cameraTargetLng="150.922433"
+            app:cameraZoom="13"
+            app:mapType="normal"
+            app:uiTiltGestures="true"
+            app:uiZoomControls="true"
+            app:uiZoomGestures="true" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/placeDetailMapView"
+            android:layout_marginTop="-16dp"
+            android:background="@drawable/rounded_layout"
+            android:paddingLeft="@dimen/pad_left"
+            android:paddingTop="@dimen/pad_top"
+            android:paddingRight="@dimen/pad_right">
+
+            <ImageView
+                android:id="@+id/placeDetailImageView"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"
+                tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+            <TextView
+                android:id="@+id/placeDetailNameTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/pad_left"
+                android:layout_toRightOf="@id/placeDetailImageView"
+                android:text="Place Name"
+                android:textSize="36sp" />
+
+            <ImageView
+                android:id="@+id/placeDetailLocationIconTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/placeDetailNameTextView"
+                android:layout_marginLeft="@dimen/pad_left"
+                android:layout_toRightOf="@id/placeDetailImageView"
+                app:srcCompat="@drawable/ic_outline_location_on_24" />
+
+            <TextView
+                android:id="@+id/placeDetailAddressTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/placeDetailNameTextView"
+                android:layout_marginRight="24dp"
+                android:layout_toRightOf="@id/placeDetailLocationIconTextView"
+                android:maxLines="2"
+                android:text="Place Address"
+                android:textSize="18sp" />
+
+            <RatingBar
+                android:id="@+id/placeDetailRatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/placeDetailImageView"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/margin_top"
+                android:progressTint="@color/dark_cyan"
+                android:scaleX=".65"
+                android:scaleY=".65" />
+
+            <TextView
+                android:id="@+id/placeDetailPhoneTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/placeDetailRatingBar"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/margin_bottom"
+                android:text="Phone Number"
+                android:textSize="@dimen/hotel_title" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/openingHoursRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/placeDetailPhoneTextView" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+</ScrollView>

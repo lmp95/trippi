@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="150dp"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/margin_left"
+    android:layout_marginTop="@dimen/margin_top"
+    android:layout_marginRight="@dimen/margin_right"
+    android:layout_marginBottom="@dimen/margin_bottom"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/openingHoursItemIconImageView"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_top"
+            app:srcCompat="@drawable/ic_history" />
+
+        <TextView
+            android:id="@+id/openingHourDayTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/openingHoursItemIconImageView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:text="Day of Open"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/openingHourTimeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/openingHourDayTextView"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="@dimen/margin_bottom"
+            android:text="Time of opening Hour"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

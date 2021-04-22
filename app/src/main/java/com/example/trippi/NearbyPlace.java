@@ -1,6 +1,7 @@
 package com.example.trippi;
 
 public class NearbyPlace {
+    public String id;
     public String name;
     public String image;
     public float rating;
@@ -10,7 +11,8 @@ public class NearbyPlace {
     public NearbyPlace() {
     }
 
-    public NearbyPlace(String name, String image, float rating, float lat, float lng) {
+    public NearbyPlace(String id, String name, String image, float rating, float lat, float lng) {
+        this.id = id;
         this.name = name;
         this.image = image;
         this.rating = rating;

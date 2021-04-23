@@ -171,6 +171,7 @@ public class HomeFragment extends Fragment {
                     NearbyPlacesGridViewAdapter(view.getContext(), R.layout.nearby_places_item, nearbyPlaceArrayList);
             nearbyPlacesGridView.setOnItemClickListener((parent, view, position, id) -> {
                 Intent intent = new Intent(getActivity(), PlaceDetailActivity.class);
+                intent.putExtra("DetailPlace", nearbyPlaceArrayList.get(position));
                 startActivity(intent);
             });
             nearbyPlacesGridView.setAdapter(adapter);

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nearbyPlaceCardView"
-    android:layout_width="200dp"
+    android:layout_width="match_parent"
     android:layout_height="150dp"
     android:paddingTop="@dimen/margin_top"
     android:paddingBottom="@dimen/margin_bottom"
@@ -15,7 +15,7 @@
 
         <ImageView
             android:id="@+id/nearbyPlaceImg"
-            android:layout_width="200dp"
+            android:layout_width="match_parent"
             android:layout_height="150dp"
             android:foreground="@drawable/img_overlay"
             android:scaleType="centerCrop"

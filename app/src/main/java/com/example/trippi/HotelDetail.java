@@ -184,8 +184,8 @@ public class HotelDetail extends AppCompatActivity implements RoomRecycleViewAda
                 Intent intent = new Intent(this, DirectionGoogleMap.class);
                 intent.putExtra("LATITUDE", currentLat);
                 intent.putExtra("LONGITUDE", currentLng);
-                intent.putExtra("HotelLat", hotel.lat);
-                intent.putExtra("HotelLng", hotel.lng);
+                intent.putExtra("DestinationLat", hotel.lat);
+                intent.putExtra("DestinationLng", hotel.lng);
                 startActivity(intent);
             }
         }

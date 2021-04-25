@@ -46,8 +46,8 @@ public class DirectionGoogleMap extends AppCompatActivity implements OnMapReadyC
         addBackAction();
         currentLat = getIntent().getFloatExtra("LATITUDE", 0);
         currentLng = getIntent().getFloatExtra("LONGITUDE", 0);
-        lat = getIntent().getFloatExtra("HotelLat", 0);
-        lng = getIntent().getFloatExtra("HotelLng", 0);
+        lat = getIntent().getFloatExtra("DestinationLat", 0);
+        lng = getIntent().getFloatExtra("DestinationLng", 0);
         currentLatLng = new LatLng(currentLat, currentLng);
         SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.mapDirectionFragment);

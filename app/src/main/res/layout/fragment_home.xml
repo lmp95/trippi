@@ -17,11 +17,12 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_left"
             android:layout_marginTop="@dimen/pad_top"
+            android:layout_toLeftOf="@id/nearbyTypeMaterialButton"
             android:hint="Select Type">
 
             <AutoCompleteTextView
                 android:id="@+id/nearbyTypeAutoCompleteTextView"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_bottom"
                 android:enabled="false"
@@ -37,8 +38,7 @@
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="65dp"
-            android:layout_alignEnd="@id/nearbyTypeTextField"
-            android:layout_alignParentEnd="false"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="false"
             android:layout_marginLeft="@dimen/margin_left"
             android:layout_marginTop="@dimen/pad_top"

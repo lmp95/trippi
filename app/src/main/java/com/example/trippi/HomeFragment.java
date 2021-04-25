@@ -135,6 +135,10 @@ public class HomeFragment extends Fragment {
                         JSONObject obj = jsonArray.getJSONObject(i);
                         nearbyPlace.id =  obj.getString("place_id");
                         nearbyPlace.name = obj.getString("name");
+                        JSONObject geometry = obj.getJSONObject("geometry");
+                        JSONObject location = geometry.getJSONObject("location");
+                        nearbyPlace.lat = Float.valueOf(location.getString("lat"));
+                        nearbyPlace.lng = Float.valueOf(location.getString("lng"));
                         if(obj.has("rating")){
                             nearbyPlace.rating = Float.parseFloat(obj.getString("rating"));
                         }

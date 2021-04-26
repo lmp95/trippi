@@ -38,7 +38,7 @@ public class StoryGridViewAdapter extends ArrayAdapter<Story> {
         storyTitleTextView.setText(story.title);
         storyAuthorTextView.setText(story.author);
         storyTotalLikeTextView.setText(story.totalLike);
-        storyImageView.setImageResource(R.drawable.sample_bg);
+        new DownloadHotelImageFromUrl(storyImageView).execute(story.images.get(0));
         return view;
     }
 }

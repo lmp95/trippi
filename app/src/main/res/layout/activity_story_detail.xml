@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".StoryDetailActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <com.smarteist.autoimageslider.SliderView
+            android:id="@+id/storyDetailImageSlider"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            app:sliderAnimationDuration="600"
+            app:sliderIndicatorAnimationDuration="600"
+            app:sliderIndicatorGravity="center_horizontal|bottom"
+            app:sliderIndicatorMargin="15dp"
+            app:sliderIndicatorOrientation="horizontal"
+            app:sliderIndicatorPadding="3dp"
+            app:sliderIndicatorRadius="2dp"
+            app:sliderIndicatorSelectedColor="#5A5A5A"
+            app:sliderIndicatorUnselectedColor="#FFF"
+            app:sliderScrollTimeInSec="1"
+            app:sliderStartAutoCycle="true" />
+
+        <TextView
+            android:id="@+id/storyDetailTitleTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/storyDetailImageSlider"
+            android:layout_marginLeft="@dimen/pad_left"
+            android:layout_marginTop="@dimen/pad_top"
+            android:layout_marginRight="@dimen/pad_right"
+            android:text="Title"
+            android:textSize="@dimen/hotel_title"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/storyDetailLikeImageView"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_below="@id/storyDetailAuthorTextView"
+            android:layout_marginLeft="@dimen/pad_left"
+            android:layout_marginTop="6dp"
+            app:srcCompat="@drawable/ic_like" />
+
+        <TextView
+            android:id="@+id/storyDetailLikeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/storyDetailAuthorTextView"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="6dp"
+            android:layout_toRightOf="@id/storyDetailLikeImageView"
+            android:text="1.6k"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/storyDetailAuthorTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/storyDetailTitleTextView"
+            android:layout_marginLeft="@dimen/pad_left"
+            android:layout_marginRight="@dimen/pad_right"
+            android:text="Author"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/storyDetailBodyTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/storyDetailLikeImageView"
+            android:layout_marginLeft="@dimen/pad_left"
+            android:layout_marginTop="@dimen/margin_top"
+            android:layout_marginRight="@dimen/pad_right"
+            android:layout_marginBottom="@dimen/margin_bottom"
+            android:text="Body"
+            app:lineHeight="24sp" />
+
+    </RelativeLayout>
+</ScrollView>

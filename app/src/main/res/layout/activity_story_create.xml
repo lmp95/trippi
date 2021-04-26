@@ -102,6 +102,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="@dimen/margin_left"
         android:layout_marginRight="@dimen/margin_right"
+        android:onClick="postCreateButtonCLick"
         android:text="Create"
         app:rippleColor="@color/cyan" />
 

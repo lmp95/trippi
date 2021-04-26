@@ -1,16 +1,28 @@
 package com.example.trippi;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -32,6 +44,9 @@ public class StoryFragment extends Fragment {
     GridView storyGridView;
     ArrayList<Story> storyArrayList;
     FloatingActionButton createStoryFloatingActionButton;
+    DatabaseReference dbRef;
+    FirebaseStorage storage;
+    StorageReference storageRef;
 
     public StoryFragment() {
         // Required empty public constructor
@@ -62,12 +77,7 @@ public class StoryFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        storyArrayList = new ArrayList<>();
-        storyArrayList.add(new Story("1", "Visit to Shwedagon Pagoda", "Mark Fin Joe", "1.2K", "This is body of story"));
-        storyArrayList.add(new Story("2", "Ancient Temples - Bagan", "Kio J. Ham", "847", "This is body of story"));
-        storyArrayList.add(new Story("3", "Mergui Archipelago ( Myeik)", "Kurry Loi", "421", "This is body of story"));
-        storyArrayList.add(new Story("4", "Myanmar's water world: exploring Inle Lake", "Gui O Jane", "109", "This is body of story"));
-        storyArrayList.add(new Story("5", "Hiking in Kalaw", "Mark Fin Joe", "56", "This is body of story"));
+        dbRef = FirebaseDatabase.getInstance().getReference();
     }
 
     @Override
@@ -77,12 +87,38 @@ public class StoryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_story, container, false);
         storyGridView = view.findViewById(R.id.storyGridView);
         createStoryFloatingActionButton = view.findViewById(R.id.createStoryFloatingActionButton);
-        StoryGridViewAdapter adapter = new StoryGridViewAdapter(getContext(), R.layout.story_card_item, storyArrayList);
-        storyGridView.setAdapter(adapter);
+        getStories();
         createStoryFloatingActionButton.setOnClickListener(v -> {
             Intent intent = new Intent(getContext(), StoryCreateActivity.class);
             startActivity(intent);
         });
         return view;
+    }
+
+    private void getStories() {
+        storyArrayList = new ArrayList<>();
+        dbRef.child("Post").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot shot : snapshot.getChildren()){
+                    for (DataSnapshot storyShot : shot.getChildren()){
+                        Story story = storyShot.getValue(Story.class);
+                        storyArrayList.add(story);
+                    }
+                }
+                StoryGridViewAdapter adapter = new StoryGridViewAdapter(getContext(), R.layout.story_card_item, storyArrayList);
+                storyGridView.setOnItemClickListener((parent, view, position, id) -> {
+                    Intent intent = new Intent(getActivity(), StoryDetailActivity.class);
+                    intent.putExtra("Story", storyArrayList.get(position));
+                    startActivity(intent);
+                });
+                storyGridView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

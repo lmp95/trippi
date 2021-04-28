@@ -38,7 +38,6 @@ public class HotelFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     ArrayList<Hotel> hotelArrayList = new ArrayList<>();
-    UserAccount userAccount;
 
     public HotelFragment() {
         // Required empty public constructor
@@ -69,8 +68,6 @@ public class HotelFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        Bundle bundle = this.getArguments();
-        userAccount = (UserAccount) bundle.getSerializable("User");
     }
 
     @Override
@@ -102,7 +99,6 @@ public class HotelFragment extends Fragment {
         listView.setOnItemClickListener((parent, view1, position, id) -> {
             Intent intent = new Intent(HotelFragment.this.getActivity(), HotelDetail.class);
             intent.putExtra("Hotel", hotelArrayList.get(position));
-            intent.putExtra("Account", userAccount);
             startActivity(intent);
         });
         return view;

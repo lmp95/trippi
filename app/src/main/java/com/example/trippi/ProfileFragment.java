@@ -25,7 +25,6 @@ public class ProfileFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     TextView profileNameTextView, profileEmailTextView;
-    UserAccount userAccount;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -56,8 +55,6 @@ public class ProfileFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        Bundle bundle = this.getArguments();
-        userAccount = (UserAccount) bundle.getSerializable("User");
     }
 
     @Override
@@ -65,10 +62,11 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        CurrentUser currentUser = (CurrentUser) getActivity().getApplicationContext();
         profileNameTextView = view.findViewById(R.id.profileNameTextView);
         profileEmailTextView = view.findViewById(R.id.profileEmailTextView);
-        profileNameTextView.setText(userAccount.name);
-        profileEmailTextView.setText(userAccount.email);
+        profileNameTextView.setText(currentUser.getUserAccount().name);
+        profileEmailTextView.setText(currentUser.getUserAccount().email);
         return view;
     }
 }

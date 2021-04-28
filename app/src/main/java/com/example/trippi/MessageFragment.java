@@ -1,13 +1,22 @@
 package com.example.trippi;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +37,10 @@ public class MessageFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     ListView chatGroupListView;
-    List<Chat> chatList;
+    List<ChatGroup> chatGroupList;
+    FloatingActionButton createNewChatGroupButton;
+    DatabaseReference dbRef;
+    ChatGroupListAdapter adapter;
 
     public MessageFragment() {
         // Required empty public constructor
@@ -59,8 +71,7 @@ public class MessageFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        chatList = new ArrayList<>();
-        chatList.add(new Chat("Trip to Ngwe Saung", "Lwin Maung Phyo"));
+        chatGroupList = new ArrayList<>();
     }
 
     @Override
@@ -68,9 +79,41 @@ public class MessageFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_message, container, false);
+        chatGroupList = new ArrayList<>();
         chatGroupListView = view.findViewById(R.id.chatListView);
-        ChatGroupListAdapter adapter = new ChatGroupListAdapter(getContext(), R.layout.chat_list_item, chatList);
-        chatGroupListView.setAdapter(adapter);
+        createNewChatGroupButton = view.findViewById(R.id.createNewChatGroupButton);
+        dbRef = FirebaseDatabase.getInstance().getReference();
+        dbRef.child("Chats").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot key : snapshot.getChildren()){
+                    ChatGroup chatGroup = new ChatGroup();
+                    chatGroup.groupName = (String) key.child("name").getValue();
+                    chatGroupList.add(chatGroup);
+                }
+                adapter = new ChatGroupListAdapter(getContext(), R.layout.chat_list_item, chatGroupList);
+                chatGroupListView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        chatGroupListView.setOnItemClickListener((parent, view1, position, id) -> {
+            Intent intent = new Intent(getActivity(), ChatRoomActivity.class);
+            startActivity(intent);
+        });
+        createNewChatGroupButton.setOnClickListener(v -> {
+            showGroupChatCreateDialog();
+        });
         return view;
     }
+
+    private void showGroupChatCreateDialog() {
+        CreateNewChatGroupDialog dialog = new CreateNewChatGroupDialog();
+        dialog.show(getFragmentManager(), "Dialog");
+    }
+
+
 }

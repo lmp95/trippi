@@ -1,6 +1,5 @@
 package com.example.trippi;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -9,16 +8,10 @@ import android.os.Bundle;
 import android.view.Menu;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView; // declare bottom navigation view
-    UserAccount userAccount;
     Bundle bundle;
 
     @Override
@@ -28,28 +21,9 @@ public class MainActivity extends AppCompatActivity {
         bundle = new Bundle();
         bottomNavigationView = findViewById(R.id.bottomNaivgationView); // initialize the bottom navigation
         bottomNavigationView.setSelectedItemId(R.id.bottomNavigationHomeIcon); // set default bottom navigation icon
-        userAccount = getUser();
-    }
-
-    public UserAccount getUser() {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child("ee7c34b0");
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                userAccount = snapshot.getValue(UserAccount.class);
-                userAccount.uID = snapshot.getKey();
-                bundle.putSerializable("User", userAccount);
-                bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
-                Fragment homeFragment = new HomeFragment();
-                loadFragment(homeFragment);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        return userAccount;
+        bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
+        Fragment homeFragment = new HomeFragment();
+        loadFragment(homeFragment);
     }
 
     private void loadFragment(Fragment fragment){
@@ -66,9 +40,7 @@ public class MainActivity extends AppCompatActivity {
                         loadFragment(HomeFragment.newInstance("", ""));
                         return true;
                     case R.id.bottomNavigationHotelIcon:
-                        Fragment hotelFragment = new HotelFragment();
-                        hotelFragment.setArguments(bundle);
-                        loadFragment(hotelFragment);
+                        loadFragment(HotelFragment.newInstance("", ""));
                         return true;
                     case R.id.bottomNavigationStoryIcon:
                         loadFragment(StoryFragment.newInstance("", ""));
@@ -77,9 +49,7 @@ public class MainActivity extends AppCompatActivity {
                         loadFragment(MessageFragment.newInstance("", ""));
                         return true;
                     case R.id.bottomNavigationProfileIcon:
-                        Fragment profileFragment = new ProfileFragment();
-                        profileFragment.setArguments(bundle);
-                        loadFragment(profileFragment);
+                        loadFragment(ProfileFragment.newInstance("", ""));
                         return true;
                 }
                 return true;

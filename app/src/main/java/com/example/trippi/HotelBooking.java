@@ -29,7 +29,6 @@ public class HotelBooking extends AppCompatActivity {
 
     Hotel hotel;
     Room room;
-    UserAccount userAccount;
     Booking booking;
     TextView hotelNameTextView;
     TextView hotelTypeTextView;
@@ -51,6 +50,7 @@ public class HotelBooking extends AppCompatActivity {
     float extraBedPrice = (float) 35.0;
     SimpleDateFormat simpleDate =  new SimpleDateFormat("dd/MM/yyyy");
     int selectedBedRoom;
+    CurrentUser currentUser;
 
 
     @SuppressLint("SetTextI18n")
@@ -59,9 +59,9 @@ public class HotelBooking extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hotel_booking);
         addBackAction();
+        currentUser = (CurrentUser) getApplicationContext();
         hotel = (Hotel) getIntent().getSerializableExtra("BookHotel");
         room = (Room) getIntent().getSerializableExtra("BookRoom");
-        userAccount = (UserAccount) getIntent().getSerializableExtra("Account");
         booking = new Booking();
         builder = new AlertDialog.Builder(this);
         hotelNameTextView = findViewById(R.id.bookHotelNameTextView);
@@ -128,7 +128,7 @@ public class HotelBooking extends AppCompatActivity {
             booking.totalPrice = totalPrice;
             booking.fromDate = simpleDate.format(fromDate);
             booking.toDate = simpleDate.format(toDate);
-            booking.userID = userAccount.uID;
+            booking.userID = currentUser.getUserAccount().uID;
             Intent intent = new Intent(this, BookingPayment.class);
             intent.putExtra("Booking", booking);
             startActivity(intent);

@@ -14,16 +14,16 @@ import androidx.annotation.Nullable;
 
 import java.util.List;
 
-public class ChatGroupListAdapter extends ArrayAdapter<Chat> {
+public class ChatGroupListAdapter extends ArrayAdapter<ChatGroup> {
     Context context;
     int resource;
-    List<Chat> chatList;
+    List<ChatGroup> chatGroupList;
 
-    public ChatGroupListAdapter(@NonNull Context context, int resource, @NonNull List<Chat> chatList) {
-        super(context, resource, chatList);
+    public ChatGroupListAdapter(@NonNull Context context, int resource, @NonNull List<ChatGroup> chatGroupList) {
+        super(context, resource, chatGroupList);
         this.context = context;
         this.resource = resource;
-        this.chatList = chatList;
+        this.chatGroupList = chatGroupList;
     }
 
     @NonNull
@@ -32,7 +32,7 @@ public class ChatGroupListAdapter extends ArrayAdapter<Chat> {
         @SuppressLint("ViewHolder") View view = LayoutInflater.from(context).inflate(resource, null);
         TextView chatGroupNameTextView = view.findViewById(R.id.chatNameTextView);
         ImageView chatGroupImageView = view.findViewById(R.id.chatIconImageView);
-        chatGroupNameTextView.setText(chatList.get(position).groupName);
+        chatGroupNameTextView.setText(chatGroupList.get(position).groupName);
         chatGroupImageView.setImageResource(R.drawable.ic_group);
         return view;
     }

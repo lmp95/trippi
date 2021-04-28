@@ -19,7 +19,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -57,7 +56,6 @@ public class HotelDetail extends AppCompatActivity implements RoomRecycleViewAda
     GoogleMap mMap;
     float currentLat, currentLng;
     Room room;
-    UserAccount userAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +63,6 @@ public class HotelDetail extends AppCompatActivity implements RoomRecycleViewAda
         setContentView(R.layout.activity_hotel_detail);
         addBackAction();
         hotel = (Hotel) getIntent().getSerializableExtra("Hotel");
-        userAccount = (UserAccount) getIntent().getSerializableExtra("Account");
         roomList = new ArrayList<>();
         roomCardView = findViewById(R.id.roomCardView);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.hotelMapView);
@@ -145,7 +142,6 @@ public class HotelDetail extends AppCompatActivity implements RoomRecycleViewAda
         Intent intent = new Intent(this, HotelBooking.class);
         intent.putExtra("BookHotel", hotel);
         intent.putExtra("BookRoom", room);
-        intent.putExtra("Account", userAccount);
         startActivity(intent);
     }
 

@@ -1,5 +1,8 @@
 package com.example.trippi;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 /**
@@ -24,7 +28,8 @@ public class ProfileFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    TextView profileNameTextView, profileEmailTextView;
+    TextView profileNameTextView, profileEmailTextView, profilePhoneTextView;
+    Button logoutButton;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -65,8 +70,24 @@ public class ProfileFragment extends Fragment {
         CurrentUser currentUser = (CurrentUser) getActivity().getApplicationContext();
         profileNameTextView = view.findViewById(R.id.profileNameTextView);
         profileEmailTextView = view.findViewById(R.id.profileEmailTextView);
+        profilePhoneTextView = view.findViewById(R.id.profilePhoneTextView);
         profileNameTextView.setText(currentUser.getUserAccount().name);
         profileEmailTextView.setText(currentUser.getUserAccount().email);
+        profilePhoneTextView.setText(currentUser.getUserAccount().phone);
+        logoutButton = view.findViewById(R.id.profileLogoutButton);
+        logoutButton.setOnClickListener(v -> {
+            new AlertDialog.Builder(getContext())
+                    .setTitle("Logout")
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        currentUser.setUserAccount(null);
+                        Intent intent = new Intent(getContext(), LoginActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    })
+                    .setNegativeButton("No", (dialog, which) -> {
+                        dialog.dismiss();
+                    }).setMessage("Are you sure to logout?").create().show();
+        });
         return view;
     }
 }

@@ -17,16 +17,18 @@ public class ChatListAdapter extends RecyclerView.Adapter{
     private static final int MSG_SEND = 1;
     Context context;
     ArrayList<Message> messages;
+    String currentUser;
 
-    public ChatListAdapter(Context context, ArrayList<Message> messages) {
+    public ChatListAdapter(Context context, ArrayList<Message> messages, String currentUser) {
         this.context = context;
         this.messages = messages;
+        this.currentUser = currentUser;
     }
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {View view;
-
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view;
         if (viewType == MSG_SEND) {
             view = LayoutInflater.from(context)
                     .inflate(R.layout.user_chat_box, parent, false);
@@ -54,7 +56,7 @@ public class ChatListAdapter extends RecyclerView.Adapter{
     @Override
     public int getItemViewType(int position) {
         Message message = (Message) messages.get(position);
-        if (message.sender.equals("A")) {
+        if (message.sender.equals(currentUser)) {
             // If the current user is the sender of the message
             return MSG_SEND;
         } else {
@@ -74,13 +76,13 @@ public class ChatListAdapter extends RecyclerView.Adapter{
         SentMessageHolder(View itemView) {
             super(itemView);
 
-            messageText = (TextView) itemView.findViewById(R.id.text_gchat_message_me);
-//            timeText = (TextView) itemView.findViewById(R.id.text_gchat_timestamp_me);
+            messageText = itemView.findViewById(R.id.text_gchat_message_me);
+            timeText = itemView.findViewById(R.id.text_gchat_timestamp_me);
         }
 
         void bind(Message message) {
             messageText.setText(message.message);
-//            timeText.setText(Utils.formatDateTime(message.getCreatedAt()));
+            timeText.setText(message.timestamp);
         }
     }
 
@@ -90,14 +92,14 @@ public class ChatListAdapter extends RecyclerView.Adapter{
         ReceivedMessageHolder(View itemView) {
             super(itemView);
 
-            messageText = (TextView) itemView.findViewById(R.id.text_gchat_message_other);
-//            timeText = (TextView) itemView.findViewById(R.id.text_message_time);
-            nameText = (TextView) itemView.findViewById(R.id.text_gchat_user_other);
+            messageText = itemView.findViewById(R.id.text_gchat_message_other);
+            timeText = itemView.findViewById(R.id.text_gchat_timestamp_other);
+            nameText = itemView.findViewById(R.id.text_gchat_user_other);
         }
 
         void bind(Message message) {
             messageText.setText(message.message);
-//            timeText.setText(Utils.formatDateTime(message.getCreatedAt()));
+            timeText.setText(message.timestamp);
             nameText.setText(message.sender);
         }
     }

@@ -1,12 +1,16 @@
 package com.example.trippi;
 
-public class ChatGroup {
+import java.io.Serializable;
+
+public class ChatGroup implements Serializable {
+    public String groupID;
     public String groupName;
 
     public ChatGroup() {
     }
 
-    public ChatGroup(String groupName, String username) {
+    public ChatGroup(String groupID, String groupName) {
+        this.groupID = groupID;
         this.groupName = groupName;
     }
 }

@@ -12,17 +12,19 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_centerInParent="true"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="@dimen/pad_left"
+            android:layout_marginTop="@dimen/pad_top"
             android:src="@drawable/ic_baseline_account_circle_24" />
 
         <TextView
             android:id="@+id/profileNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/imageView"
-            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/pad_left"
+            android:layout_marginTop="@dimen/pad_top"
+            android:layout_toRightOf="@id/imageView"
             android:text="Full Name"
             android:textSize="@dimen/hotel_title" />
 
@@ -31,9 +33,47 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/profileNameTextView"
-            android:layout_centerInParent="true"
-            android:text="Email Address"
-            android:textSize="@dimen/hotel_title" />
+            android:layout_marginLeft="@dimen/pad_left"
+            android:layout_toRightOf="@id/imageView"
+            android:text="Email Address" />
+
+        <TextView
+            android:id="@+id/profilePhoneTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/profileEmailTextView"
+            android:layout_marginLeft="@dimen/pad_left"
+            android:layout_toRightOf="@id/imageView"
+            android:text="Phone" />
+
+        <View
+            android:id="@+id/profileDivider"
+            android:layout_width="match_parent"
+            android:layout_height=".5dp"
+            android:layout_below="@id/imageView"
+            android:layout_marginTop="@dimen/margin_top"
+            android:background="#593A3A3A" />
+
+        <Button
+            android:id="@+id/profileLogoutButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/profileDivider"
+            android:background="@android:color/transparent"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center_vertical"
+            android:text="Logout"
+            android:textColor="@color/dark_gray"
+            android:textStyle="bold"
+            app:rippleColor="#800B9C91" />
+
+        <View
+            android:id="@+id/profileDivider2"
+            android:layout_width="match_parent"
+            android:layout_height=".5dp"
+            android:layout_below="@id/profileLogoutButton"
+            android:background="#593A3A3A" />
     </RelativeLayout>
 
 </FrameLayout>

@@ -19,7 +19,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,10 +36,12 @@ public class MessageFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     ListView chatGroupListView;
-    List<ChatGroup> chatGroupList;
+    ArrayList<ChatGroup> chatGroupList;
     FloatingActionButton createNewChatGroupButton;
     DatabaseReference dbRef;
     ChatGroupListAdapter adapter;
+    CurrentUser currentUser;
+    ArrayList<String> groupIDs;
 
     public MessageFragment() {
         // Required empty public constructor
@@ -79,20 +80,27 @@ public class MessageFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_message, container, false);
+        currentUser = (CurrentUser) getActivity().getApplicationContext();
         chatGroupList = new ArrayList<>();
         chatGroupListView = view.findViewById(R.id.chatListView);
         createNewChatGroupButton = view.findViewById(R.id.createNewChatGroupButton);
         dbRef = FirebaseDatabase.getInstance().getReference();
-        dbRef.child("Chats").addValueEventListener(new ValueEventListener() {
+        dbRef.child("Users").child(currentUser.getUserAccount().uID).child("chatGroup").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                groupIDs = new ArrayList<>();
                 for(DataSnapshot key : snapshot.getChildren()){
+                    String value = (String) key.getValue();
+                    groupIDs.add(value);
                     ChatGroup chatGroup = new ChatGroup();
-                    chatGroup.groupName = (String) key.child("name").getValue();
+                    chatGroup.groupID = dbRef.child("Chats").child(key.getValue().toString()).getKey();
+                    dbRef.child("Chats").child(key.getValue().toString()).child("name").get().addOnSuccessListener(dataSnapshot -> {
+                       chatGroup.groupName = (String) dataSnapshot.getValue();
+                        adapter = new ChatGroupListAdapter(getContext(), R.layout.chat_list_item, chatGroupList);
+                        chatGroupListView.setAdapter(adapter);
+                    });
                     chatGroupList.add(chatGroup);
                 }
-                adapter = new ChatGroupListAdapter(getContext(), R.layout.chat_list_item, chatGroupList);
-                chatGroupListView.setAdapter(adapter);
             }
 
             @Override
@@ -102,6 +110,7 @@ public class MessageFragment extends Fragment {
         });
         chatGroupListView.setOnItemClickListener((parent, view1, position, id) -> {
             Intent intent = new Intent(getActivity(), ChatRoomActivity.class);
+            intent.putExtra("ChatGroup", chatGroupList.get(position));
             startActivity(intent);
         });
         createNewChatGroupButton.setOnClickListener(v -> {

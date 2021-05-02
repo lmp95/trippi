@@ -67,6 +67,7 @@ public class DirectionGoogleMap extends AppCompatActivity implements OnMapReadyC
 
     private void addBackAction() {
         ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("");
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }

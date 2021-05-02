@@ -14,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +43,10 @@ public class NearbyPlacesGridViewAdapter extends ArrayAdapter<NearbyPlace> {
         nearbyPlaceTextView.setText(nearbyPlace.name);
         nearbyPlaceRatingBar.setRating(nearbyPlace.rating);
         nearbyPlaceRatingTextView.setText(String.valueOf(nearbyPlace.rating));
-        new DownloadHotelImageFromUrl(nearbyPlaceImageView).execute(nearbyPlace.image);
+        Glide.with(context)
+                .load(nearbyPlace.image)
+                .centerCrop()
+                .into(nearbyPlaceImageView);
         return view;
     }
 }

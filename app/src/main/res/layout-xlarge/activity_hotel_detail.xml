@@ -83,7 +83,7 @@
                 android:layout_marginLeft="@dimen/pad_left"
                 android:layout_marginTop="@dimen/margin_top"
                 android:background="@drawable/custom_rounded_button"
-                android:onClick="showDirectionOnMap"
+                android:onClick="showHotelDirection"
                 android:text="Get Direction"
                 android:textColor="@color/white"
                 android:textSize="12sp" />

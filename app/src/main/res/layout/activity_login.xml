@@ -16,29 +16,45 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center">
 
-            <ImageView
-                android:id="@+id/logoImageView"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_centerHorizontal="true" />
-
             <TextView
                 android:id="@+id/loginTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/logoImageView"
-                android:gravity="center_horizontal"
-                android:text="Login"
+                android:layout_marginLeft="@dimen/pad_left"
+                android:text="Welcome"
                 android:textAllCaps="true"
-                android:textSize="@dimen/hotel_title" />
+                android:textSize="@dimen/hotel_title_xl"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/decorator"
+                android:layout_width="125dp"
+                android:layout_height="2.5dp"
+                android:layout_below="@id/loginTextView"
+                android:layout_marginLeft="@dimen/margin_left"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="@dimen/pad_right"
+                android:layout_toRightOf="@id/appSloganTextView"
+                android:background="@color/matte_black" />
+
+            <TextView
+                android:id="@+id/appSloganTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/loginTextView"
+                android:paddingLeft="@dimen/pad_left"
+                android:text="To Travel Is To Live"
+                android:textAllCaps="true"
+                android:textColor="@color/dark_cyan" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/loginEmailTextField"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/loginTextView"
+                android:layout_below="@id/appSloganTextView"
                 android:layout_marginLeft="@dimen/margin_left"
+                android:layout_marginTop="@dimen/margin_top"
                 android:layout_marginRight="@dimen/margin_right"
                 android:layout_marginBottom="@dimen/margin_bottom"
                 android:hint="Email">

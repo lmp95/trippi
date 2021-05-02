@@ -37,6 +37,7 @@ public class HotelSearchActivity extends AppCompatActivity {
         hotelList = new ArrayList<>();
         hotelList = (ArrayList<Hotel>) getIntent().getSerializableExtra("HotelList");
         addBackAction();
+        toggleClearButton();
         adapter = new HotelSearchResultListAdapter(getApplicationContext(), R.layout.search_result_item, hotelList);
         hotelSearchResultListView.setAdapter(adapter);
         editTextClear.setOnClickListener(v -> {
@@ -49,6 +50,7 @@ public class HotelSearchActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                toggleClearButton();
                 adapter.getFilter().filter(s);
             }
 
@@ -70,6 +72,15 @@ public class HotelSearchActivity extends AppCompatActivity {
         actionBar.setTitle("");
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    private void toggleClearButton(){
+        if(hotelSearchEditText.length() <= 0){
+            editTextClear.setVisibility(View.INVISIBLE);
+        }
+        else {
+            editTextClear.setVisibility(View.VISIBLE);
         }
     }
 

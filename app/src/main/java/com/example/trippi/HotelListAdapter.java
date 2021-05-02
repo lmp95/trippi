@@ -12,6 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 public class HotelListAdapter extends ArrayAdapter<Hotel> {
@@ -42,7 +44,10 @@ public class HotelListAdapter extends ArrayAdapter<Hotel> {
         hotelName.setText(hotel.name);
         hotelRating.setText(String.valueOf(hotel.rating));
         hotelRatingBar.setRating(hotel.rating);
-        new DownloadHotelImageFromUrl(imageView).execute(hotel.image_url);
+        Glide.with(context)
+                .load(hotel.image_url)
+                .centerCrop()
+                .into(imageView);
 
         return view;
     }

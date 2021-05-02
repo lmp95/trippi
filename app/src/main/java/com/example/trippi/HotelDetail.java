@@ -2,6 +2,7 @@ package com.example.trippi;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
@@ -22,10 +23,13 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -54,8 +58,11 @@ public class HotelDetail extends AppCompatActivity implements RoomRecycleViewAda
     CardView roomCardView;
     Hotel hotel;
     GoogleMap mMap;
-    float currentLat, currentLng;
+    LatLng currentLatLng;
     Room room;
+    LocationManager locationManager;
+    AlertDialog.Builder builder;
+    AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +71,7 @@ public class HotelDetail extends AppCompatActivity implements RoomRecycleViewAda
         addBackAction();
         hotel = (Hotel) getIntent().getSerializableExtra("Hotel");
         roomList = new ArrayList<>();
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         roomCardView = findViewById(R.id.roomCardView);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.hotelMapView);
         mapFragment.getMapAsync(this);
@@ -111,7 +119,10 @@ public class HotelDetail extends AppCompatActivity implements RoomRecycleViewAda
         hotelLocationTextView.setText(hotel.location);
         hotelRatingBar.setRating(hotel.rating);
         ratingTextView.setText(String.valueOf(hotel.rating));
-        new DownloadHotelImageFromUrl(hotelImageView).execute(hotel.image_url);
+        Glide.with(getApplicationContext())
+                .load(hotel.image_url)
+                .centerCrop()
+                .into(hotelImageView);
     }
 
     @SuppressLint("SetTextI18n")
@@ -134,8 +145,18 @@ public class HotelDetail extends AppCompatActivity implements RoomRecycleViewAda
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
-        currentLat = (float) location.getLatitude();
-        currentLng = (float) location.getLongitude();
+        currentLatLng = new LatLng(location.getLatitude(), location.getLongitude());
+        dialog.dismiss();
+        Intent intent = new Intent(this, DirectionGoogleMap.class);
+        intent.putExtra("LATITUDE", (float) currentLatLng.latitude);
+        intent.putExtra("LONGITUDE", (float) currentLatLng.longitude);
+        intent.putExtra("DestinationLat", (float) hotel.lat);
+        intent.putExtra("DestinationLng", (float) hotel.lng);
+        startActivity(intent);
+    }
+
+    public void sendMessageToHotel(View view){
+        Toast.makeText(this, "Not Available!", Toast.LENGTH_SHORT).show();
     }
 
     public void onBookButtonClick(View view) {
@@ -162,34 +183,33 @@ public class HotelDetail extends AppCompatActivity implements RoomRecycleViewAda
         return super.onOptionsItemSelected(item);
     }
 
-    public void showDirectionOnMap(View view) {
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        LocationListener locationListener = location -> {
-            currentLat = (float) location.getLatitude();
-            currentLng = (float) location.getLongitude();
-        };
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+    public void showHotelDirection(View view) {
+        builder = new AlertDialog.Builder(this);
+        final ProgressBar progressBar = new ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        progressBar.setPadding(50, 50, 50, 50);
+        progressBar.setIndeterminate(true);
+        progressBar.setLayoutParams(lp);
+        dialog = builder.setView(progressBar).setCancelable(false).create();
+        dialog.show();
+        checkCurrentLocation();
+    }
+
+    public void checkCurrentLocation() {
+        if (ActivityCompat.checkSelfPermission(this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestLocationPermission();
         }
         else{
-            if(currentLat <= 0 && currentLng <= 0){
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 10, locationListener);
-                Toast.makeText(this, "Please try again!", Toast.LENGTH_SHORT).show();
-            }
-            else{
-                Intent intent = new Intent(this, DirectionGoogleMap.class);
-                intent.putExtra("LATITUDE", currentLat);
-                intent.putExtra("LONGITUDE", currentLng);
-                intent.putExtra("DestinationLat", hotel.lat);
-                intent.putExtra("DestinationLng", hotel.lng);
-                startActivity(intent);
+            if(currentLatLng == null){
+                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1,
+                        1, this::onLocationChanged);
             }
         }
-    }
-
-    public void sendMessageToHotel(View view){
-        Toast.makeText(this, "Not Available!", Toast.LENGTH_SHORT).show();
     }
 
     public void requestLocationPermission() {

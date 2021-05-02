@@ -5,12 +5,14 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -121,7 +123,7 @@ public class MessageFragment extends Fragment {
 
     private void showGroupChatCreateDialog() {
         CreateNewChatGroupDialog dialog = new CreateNewChatGroupDialog();
-        dialog.show(getFragmentManager(), "Dialog");
+        dialog.show(getFragmentManager(), "Dialog"); // set default bottom navigation icon
     }
 
 

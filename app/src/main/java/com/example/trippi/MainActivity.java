@@ -61,7 +61,13 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-//    @Override
+    @Override
+    public void onBackPressed() {
+        bottomNavigationView.setSelectedItemId(R.id.bottomNavigationHomeIcon);
+        loadFragment(HomeFragment.newInstance("", ""));
+    }
+
+    //    @Override
 //    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 //        if(item.getItemId() == R.id.actionbarCompass){
 ////            Toast.makeText(getApplicationContext(), "Unavailable", Toast.LENGTH_SHORT).show();

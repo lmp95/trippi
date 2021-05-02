@@ -1,12 +1,15 @@
 package com.example.trippi;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +31,8 @@ public class LoginActivity extends AppCompatActivity {
     String email, password;
     DatabaseReference dbRef;
     UserAccount account;
+    AlertDialog dialog;
+    AlertDialog.Builder builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +50,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onLoginClick(View view){
+        showDialog();
         email = loginEmailEditText.getText().toString();
         password = loginPasswordEditText.getText().toString();
         if(email.length() <= 0 && password.length() <= 0){
             Toast.makeText(getApplicationContext(), "Enter email and password", Toast.LENGTH_LONG).show();
+            dialog.dismiss();
         }
         else{
             firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, task -> {
@@ -62,8 +69,10 @@ public class LoginActivity extends AppCompatActivity {
                             account = snapshot.getValue(UserAccount.class);
                             CurrentUser currentUser = (CurrentUser) getApplicationContext();
                             currentUser.setUserAccount(account);
+                            dialog.dismiss();
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
+                            finish();
                         }
 
                         @Override
@@ -74,9 +83,23 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else{
                     Toast.makeText(getApplicationContext(), "Failed to Login", Toast.LENGTH_LONG).show();
+                    dialog.dismiss();
                 }
             });
         }
+    }
+
+    private void showDialog() {
+        builder = new AlertDialog.Builder(this);
+        final ProgressBar progressBar = new ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        progressBar.setPadding(50, 50, 50, 50);
+        progressBar.setIndeterminate(true);
+        progressBar.setLayoutParams(lp);
+        dialog = builder.setView(progressBar).setCancelable(false).create();
+        dialog.show();
     }
 
     public void onCreateAccountClick(View view){

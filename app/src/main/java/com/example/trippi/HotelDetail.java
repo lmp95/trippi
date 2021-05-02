@@ -147,6 +147,7 @@ public class HotelDetail extends AppCompatActivity implements RoomRecycleViewAda
 
     private void addBackAction() {
         ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("");
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }

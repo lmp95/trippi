@@ -67,9 +67,9 @@ public class StoryCreateActivity extends AppCompatActivity {
 
     private void addBackAction() {
         ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("");
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("Back");
         }
     }
 

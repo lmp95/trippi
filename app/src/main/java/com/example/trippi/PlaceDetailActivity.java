@@ -89,6 +89,7 @@ public class PlaceDetailActivity extends AppCompatActivity implements OnMapReady
 
     private void addBackAction() {
         ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("");
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }

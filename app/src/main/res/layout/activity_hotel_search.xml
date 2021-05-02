@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HotelSearchActivity">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/hotelSearchCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/hotelSearchEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:hint="Search hotel"
+            android:inputType="text"
+            android:maxLines="1"
+            android:paddingLeft="@dimen/margin_left"
+            android:paddingTop="@dimen/margin_top"
+            android:paddingRight="@dimen/margin_right"
+            android:paddingBottom="@dimen/margin_bottom"
+            tools:ignore="Autofill" />
+
+        <ImageView
+            android:id="@+id/searchEditTextClearIcon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center_vertical|end"
+            android:layout_marginRight="@dimen/margin_right"
+            android:clickable="true"
+            app:srcCompat="@drawable/ic_outline_clear"
+            app:tint="@color/dark_cyan" />
+
+    </androidx.cardview.widget.CardView>
+
+    <ListView
+        android:id="@+id/hotelSearchResultListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/hotelSearchCardView" />
+
+</RelativeLayout>

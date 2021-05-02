@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -38,6 +39,7 @@ public class HotelFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     ArrayList<Hotel> hotelArrayList = new ArrayList<>();
+    CardView hotelListSearchCardView;
 
     public HotelFragment() {
         // Required empty public constructor
@@ -76,6 +78,7 @@ public class HotelFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_hotel, container, false);
         ListView listView = view.findViewById(R.id.hotelListView);
+        hotelListSearchCardView = view.findViewById(R.id.hotelListSearchCardView);
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Hotels");
         databaseReference.orderByChild("rating").addValueEventListener(new ValueEventListener() {
             @Override
@@ -99,6 +102,11 @@ public class HotelFragment extends Fragment {
         listView.setOnItemClickListener((parent, view1, position, id) -> {
             Intent intent = new Intent(HotelFragment.this.getActivity(), HotelDetail.class);
             intent.putExtra("Hotel", hotelArrayList.get(position));
+            startActivity(intent);
+        });
+        hotelListSearchCardView.setOnClickListener(v -> {
+            Intent intent = new Intent(getContext(), HotelSearchActivity.class);
+            intent.putExtra("HotelList", hotelArrayList);
             startActivity(intent);
         });
         return view;

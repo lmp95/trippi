@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/searchHotelResultIcon"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/pad_left"
+        app:srcCompat="@drawable/ic_hotel" />
+
+    <TextView
+        android:id="@+id/searchResultHotelName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/searchHotelResultIcon"
+        android:paddingLeft="@dimen/margin_left"
+        android:paddingTop="@dimen/margin_top"
+        android:paddingBottom="@dimen/margin_bottom"
+        android:text="TextView" />
+
+    <View
+        android:id="@+id/searchResultBar"
+        android:layout_width="match_parent"
+        android:layout_height=".25dp"
+        android:layout_below="@id/searchResultHotelName"
+        android:background="#DDDDDD" />
+</RelativeLayout>

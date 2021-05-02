@@ -1,9 +1,12 @@
 package com.example.trippi;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType;
@@ -20,6 +23,7 @@ public class StoryDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_story_detail);
+        addBackAction();
         ArrayList<SliderData> sliderDataArrayList = new ArrayList<>();
         Story story = (Story) getIntent().getSerializableExtra("Story");
         storyDetailTitleTextView = findViewById(R.id.storyDetailTitleTextView);
@@ -41,5 +45,22 @@ public class StoryDetailActivity extends AppCompatActivity {
         sliderView.setIndicatorSelectedColor(Color.parseColor("#098178"));
         sliderView.setScrollTimeInSec(3);
         sliderView.setAutoCycle(false);
+    }
+
+    private void addBackAction() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("");
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

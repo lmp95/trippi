@@ -1,12 +1,14 @@
 package com.example.trippi;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,6 +37,7 @@ public class ChatRoomActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_room);
+        addBackAction();
         chatGroup = (ChatGroup) getIntent().getSerializableExtra("ChatGroup");
         currentUser = (CurrentUser) getApplicationContext();
         dbRef = FirebaseDatabase.getInstance().getReference();
@@ -51,9 +54,27 @@ public class ChatRoomActivity extends AppCompatActivity {
                 sendMessage.sender = currentUser.getUserAccount().name;
                 sendMessage.message = sendEditText.getText().toString();
                 sendMessage.timestamp = formatter.format(date);
-                dbRef.child("Chats").child(chatGroup.groupID).push().setValue(sendMessage);
+                dbRef.child("Chats").child(chatGroup.groupID).child("messages").push().setValue(sendMessage);
+                sendEditText.setText("");
             }
         });
+    }
+
+    private void addBackAction() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("");
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int itemId = item.getItemId();
+        if (itemId == android.R.id.home) {
+            onBackPressed();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void loadMessages() {

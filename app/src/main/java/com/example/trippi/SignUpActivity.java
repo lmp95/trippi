@@ -4,11 +4,14 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -18,6 +21,7 @@ public class SignUpActivity extends AppCompatActivity {
     EditText signUpEmailEditText, signUpPasswordEditText,
             signUpConfirmPasswordEditText, signUpNameEditText, signUpPhoneEditText;
     AlertDialog.Builder builder;
+    AlertDialog dialog;
     FirebaseAuth auth;
     String email, password, confirmPassword, name, phone;
     DatabaseReference dbRef;
@@ -58,10 +62,15 @@ public class SignUpActivity extends AppCompatActivity {
         builder.setMessage(message)
                 .setCancelable(false)
                 .setPositiveButton("Yes", (dialog, id) -> {
+                    showLoadingDialog();
                     auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, task -> {
                         if (task.isSuccessful()) {
                             UserAccount userAccount = new UserAccount(auth.getUid(), name, email, phone, null);
                             dbRef.child("Users").child(auth.getUid()).setValue(userAccount);
+                            dialog.dismiss();
+                            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                            startActivity(intent);
+                            finish();
                         } else {
                             Log.d("TAG", "showDialog: " + task.getException());
                         }
@@ -71,6 +80,19 @@ public class SignUpActivity extends AppCompatActivity {
         AlertDialog alert = builder.create();
         alert.setTitle(title);
         alert.show();
+    }
+
+    private void showLoadingDialog() {
+        builder = new AlertDialog.Builder(this);
+        final ProgressBar progressBar = new ProgressBar(this, null, android.R.attr.progressBarStyleHorizontal);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        progressBar.setPadding(50, 50, 50, 50);
+        progressBar.setIndeterminate(true);
+        progressBar.setLayoutParams(lp);
+        dialog = builder.setView(progressBar).setCancelable(false).create();
+        dialog.show();
     }
 
     private void addBackAction() {

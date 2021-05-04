@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +43,6 @@ public class MessageFragment extends Fragment {
     FloatingActionButton createNewChatGroupButton;
     DatabaseReference dbRef;
     ChatGroupListAdapter adapter;
-    CurrentUser currentUser;
     ArrayList<String> groupIDs;
 
     public MessageFragment() {
@@ -82,11 +82,11 @@ public class MessageFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_message, container, false);
-        currentUser = (CurrentUser) getActivity().getApplicationContext();
         chatGroupList = new ArrayList<>();
         chatGroupListView = view.findViewById(R.id.chatListView);
         createNewChatGroupButton = view.findViewById(R.id.createNewChatGroupButton);
         dbRef = FirebaseDatabase.getInstance().getReference();
+        CurrentUser currentUser = (CurrentUser) getActivity().getApplicationContext();
         dbRef.child("Users").child(currentUser.getUserAccount().uID).child("chatGroup").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -122,8 +122,8 @@ public class MessageFragment extends Fragment {
     }
 
     private void showGroupChatCreateDialog() {
-        CreateNewChatGroupDialog dialog = new CreateNewChatGroupDialog();
-        dialog.show(getFragmentManager(), "Dialog"); // set default bottom navigation icon
+        Intent intent = new Intent(getActivity(), CreateGroupActivity.class);
+        startActivity(intent);
     }
 
 

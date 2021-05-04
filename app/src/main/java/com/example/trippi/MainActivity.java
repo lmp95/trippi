@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView; // declare bottom navigation view
     Bundle bundle;
+    String fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,10 +21,26 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         bundle = new Bundle();
         bottomNavigationView = findViewById(R.id.bottomNaivgationView); // initialize the bottom navigation
-        bottomNavigationView.setSelectedItemId(R.id.bottomNavigationHomeIcon); // set default bottom navigation icon
         bottomNavigationView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
-        Fragment homeFragment = new HomeFragment();
-        loadFragment(homeFragment);
+        this.getSupportActionBar().hide();
+        fragment = getIntent().getStringExtra("Fragment");
+        if(fragment != null){
+            if(fragment.equals("Story")){
+                bottomNavigationView.setSelectedItemId(R.id.bottomNavigationStoryIcon);
+                Fragment setFragment = new StoryFragment();
+                loadFragment(setFragment);
+            }
+            else if(fragment.equals("Message")){
+                bottomNavigationView.setSelectedItemId(R.id.bottomNavigationMessageIcon);
+                Fragment setFragment = new MessageFragment();
+                loadFragment(setFragment);
+            }
+        }
+        else {
+            bottomNavigationView.setSelectedItemId(R.id.bottomNavigationHomeIcon);
+            Fragment homeFragment = new HomeFragment();
+            loadFragment(homeFragment);
+        }
     }
 
     private void loadFragment(Fragment fragment){

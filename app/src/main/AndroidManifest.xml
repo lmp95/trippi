@@ -21,7 +21,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Trippi">
-        <activity android:name=".HotelSearchActivity"></activity>
+        <activity android:name=".InviteUserActivity"></activity>
+        <activity android:name=".CreateGroupActivity" />
+        <activity android:name=".HotelSearchActivity" />
         <activity android:name=".ChatRoomActivity" />
         <activity android:name=".StoryDetailActivity" />
         <activity android:name=".PlaceDetailActivity" />

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InviteUserActivity">
+
+    <TextView
+        android:id="@+id/inviteAccountTitleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/pad_left"
+        android:paddingTop="@dimen/pad_top"
+        android:text="Invite Friends"
+        android:textSize="@dimen/hotel_title"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/inviteAccountEmailEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/inviteAccountTitleTextView"
+        android:layout_marginLeft="@dimen/pad_left"
+        android:layout_marginTop="@dimen/pad_top"
+        android:layout_marginRight="@dimen/pad_right"
+        android:ems="10"
+        android:hint="Enter email"
+        android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/inviteAccountSendButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/dark_cyan"
+        android:text="Invite" />
+
+</RelativeLayout>

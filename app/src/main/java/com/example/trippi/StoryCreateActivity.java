@@ -120,6 +120,10 @@ public class StoryCreateActivity extends AppCompatActivity {
                     postBodyEditText.getText().clear();
                     adapter.notifyDataSetChanged();
                     dialog.dismiss();
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("Fragment", "Story");
+                    startActivity(intent);
                 });
             });
         });

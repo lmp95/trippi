@@ -2,16 +2,25 @@ package com.example.trippi;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+import android.widget.Toolbar;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,15 +31,15 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 public class ChatRoomActivity extends AppCompatActivity {
     RecyclerView chatRecyclerView;
     ChatListAdapter adapter;
     ArrayList<Message> messages;
-    EditText sendEditText;
+    EditText sendEditText, inviteEmailEditText;
     Button sendMessageButton;
     DatabaseReference dbRef;
-    CurrentUser currentUser;
     ChatGroup chatGroup;
 
     @Override
@@ -39,7 +48,7 @@ public class ChatRoomActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat_room);
         addBackAction();
         chatGroup = (ChatGroup) getIntent().getSerializableExtra("ChatGroup");
-        currentUser = (CurrentUser) getApplicationContext();
+        CurrentUser currentUser = (CurrentUser) getApplicationContext();
         dbRef = FirebaseDatabase.getInstance().getReference();
         messages = new ArrayList<>();
         loadMessages();
@@ -69,15 +78,31 @@ public class ChatRoomActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.actionbar_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
         if (itemId == android.R.id.home) {
             onBackPressed();
         }
+//        else if(itemId == R.id.addUserToChatGroup){
+//            showInviteDialog();
+//        }
         return super.onOptionsItemSelected(item);
     }
 
+    private void showInviteDialog() {
+        Intent intent = new Intent(getApplicationContext(), InviteUserActivity.class);
+        intent.putExtra("GroupID", chatGroup.groupID);
+        startActivity(intent);
+    }
+
     private void loadMessages() {
+        CurrentUser currentUser = (CurrentUser) getApplicationContext();
         dbRef.child("Chats").child(chatGroup.groupID).child("messages").orderByKey().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -85,7 +110,7 @@ public class ChatRoomActivity extends AppCompatActivity {
                     Message message = messageSnapShot.getValue(Message.class);
                     messages.add(message);
                 }
-                adapter = new ChatListAdapter(getApplicationContext(), messages, currentUser.getUserAccount().name);
+                adapter = new ChatListAdapter(getApplicationContext(), messages, currentUser);
                 chatRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                 chatRecyclerView.setAdapter(adapter);
             }

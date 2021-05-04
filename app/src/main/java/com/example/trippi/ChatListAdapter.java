@@ -17,9 +17,9 @@ public class ChatListAdapter extends RecyclerView.Adapter{
     private static final int MSG_SEND = 1;
     Context context;
     ArrayList<Message> messages;
-    String currentUser;
+    CurrentUser currentUser;
 
-    public ChatListAdapter(Context context, ArrayList<Message> messages, String currentUser) {
+    public ChatListAdapter(Context context, ArrayList<Message> messages, CurrentUser currentUser) {
         this.context = context;
         this.messages = messages;
         this.currentUser = currentUser;
@@ -56,7 +56,7 @@ public class ChatListAdapter extends RecyclerView.Adapter{
     @Override
     public int getItemViewType(int position) {
         Message message = (Message) messages.get(position);
-        if (message.sender.equals(currentUser)) {
+        if (message.sender.equals(currentUser.getUserAccount().name)) {
             // If the current user is the sender of the message
             return MSG_SEND;
         } else {
